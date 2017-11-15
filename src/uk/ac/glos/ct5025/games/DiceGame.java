@@ -4,7 +4,6 @@ import uk.ac.glos.ct5025.scorecards.DiceGameScorecard;
 
 public class DiceGame {
     private int NUMBER_OF_DICE;
-    private int NUMBER_OF_ROUNDS;
     private int dieRollResult;
     private int highScore;
     private DiceGameScorecard scorecard = new DiceGameScorecard();
