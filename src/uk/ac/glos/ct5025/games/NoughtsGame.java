@@ -3,13 +3,24 @@ package uk.ac.glos.ct5025.games;
 public class NoughtsGame {
     private final int BOARD_DIMENSION = 2;
     private char[][] gameBoard = new char[BOARD_DIMENSION][BOARD_DIMENSION];
-    private String winner;
+    private String winner = "";
     private Object player1;
     private Object player2;
     private char player1Symbol = 'o';
     private char player2Symbol = 'x';
     private char currentPlayerSymbol = 'o';
     private long startTime = System.currentTimeMillis();
+
+    private void NoughtsGame(int players) {
+
+    }
+
+    private void playGame() {
+        while(this.getWinner() == "") {
+            this.instantiatePlayers();
+
+        }
+    }
 
     private int[] askHumanForMove() {
         getRow();
@@ -142,5 +153,9 @@ public class NoughtsGame {
 
     public void setWinner(String winner) {
         this.winner = winner;
+    }
+
+    public String getWinner() {
+        return winner;
     }
 }
