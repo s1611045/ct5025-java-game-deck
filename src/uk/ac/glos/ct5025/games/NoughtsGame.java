@@ -1,7 +1,8 @@
 package uk.ac.glos.ct5025.games;
+import uk.ac.glos.ct5025.players.*;
 
 public class NoughtsGame {
-    private final int BOARD_DIMENSION = 2;
+    private final int BOARD_DIMENSION = 3;
     private char[][] gameBoard = new char[BOARD_DIMENSION][BOARD_DIMENSION];
     private String winner = "";
     private Object player1;
@@ -9,54 +10,146 @@ public class NoughtsGame {
     private char player1Symbol = 'o';
     private char player2Symbol = 'x';
     private char currentPlayerSymbol = 'o';
+    private int gameCounter = 1;
     private long startTime = System.currentTimeMillis();
+    private long timeTaken;
 
-    private void NoughtsGame(int players) {
 
+    //Instantiate player instances polymorphously based on user input
+    public NoughtsGame(String playerName) {
+        System.out.print("Starting new game with human vs. computer\n");
+        this.player1 = new Human(playerName);
+        this.player2 = new Computer();
+        this.playGame();
     }
+
+    public NoughtsGame(String player1Name, String player2Name) {
+        System.out.print("Starting new game with human vs. human\n");
+        this.player1 = new Human(player1Name);
+        this.player2 = new Human(player2Name);
+        this.playGame();
+    }
+
+    public NoughtsGame() {
+        System.out.print("Starting new game with computer vs. computer\n");
+        this.player1 = new Computer();
+        this.player2 = new Computer();
+        this.playGame();
+    }
+    /////////////////////////////////////////////////////////////////
 
     private void playGame() {
         while(this.getWinner() == "") {
-            this.instantiatePlayers();
+            //Print board
+            System.out.print("\nIt is currently " + this.currentPlayerSymbol + "'s turn.\n");
+            this.printGameBoard();
 
+            //Get current player type and ask them for move
+            if(currentPlayerSymbol == 'o') {
+                //'If player1 is human, ask them for move'
+                if(player1 instanceof Human) {
+                    this.humanMove();
+                    if(this.checkWinner()) {
+                        this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else {
+                        this.changeCurrentPlayer();
+                    }
+                }
+                else {
+                    this.computerMove();
+                    if(this.checkWinner()) {
+                        this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else {
+                        this.changeCurrentPlayer();
+                    }
+                }
+            }
+            else {
+                if (player2 instanceof Human) {
+                    this.humanMove();
+                    if(this.checkWinner()) {
+                        this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else {
+                        this.changeCurrentPlayer();
+                    }
+                }
+                else {
+                    this.computerMove();
+                    if (this.checkWinner()) {
+                        this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else {
+                        this.changeCurrentPlayer();
+                    }
+                }
+            }
+        }
+
+        //Record time taken in game
+        this.timeTaken = ((System.currentTimeMillis() - this.startTime)/1000);
+
+        this.printGameBoard();
+        System.out.print(this.currentPlayerSymbol + " wins!");
+        System.out.print("\nThis game took " + this.timeTaken + " seconds.");
+    }
+
+    private void humanMove() {
+        boolean moveMade = false;
+        int[] move;
+
+        while(!moveMade) {
+            move = getCoordinates();
+            if(checkSquareContainsSymbol(move[0], move[1])) {
+                moveMade = false;
+            }
+            else {
+                addSymbolToBoard(move[0], move[1], this.currentPlayerSymbol);
+                moveMade = true;
+            }
         }
     }
 
-    private int[] askHumanForMove() {
-        getRow();
-        //return statement
-    }
-
-    private int getRow() {
+    private int[] getCoordinates() {
         boolean isValidInput = false;
-        char input;
         int row = 0;
+        String inputString = "";
 
         while (!isValidInput) {
-            System.out.print("Enter the row: ");
+            //Get user input
+            System.out.print("Enter the row and column you want to place your symbol in, separated by a comma or space: ");
             java.util.Scanner scanner = new java.util.Scanner(System.in);
-            String inputString = scanner.next();
-            input = inputString.charAt(0);
-            if (!Character.isDigit(input)) {
-                System.out.print("Invalid input! Try again.\n");
+            inputString = scanner.next();
+
+            //Check input is valid
+            if (!((Character.isDigit(inputString.charAt(0))) && (Character.isDigit(inputString.charAt(2))))) {
+                System.out.print("Invalid input! Try again. Error 1\n");
                 isValidInput = false;
-            }
-            else if (!(input == '1') || !(input == '2') || !(input == '3')) {
-                System.out.print("Invalid input! Try again.\n");
+                //Use regex to check numbers are between 1 and 3
+            } else if (!(inputString.matches("^[1-3](.*[1-3])?$"))) {
+                System.out.print("Invalid input! Try again. Error 2\n");
                 isValidInput = false;
-            }
-            else {
-                row = Integer.parseInt(Character.toString(input));
-                row--;
+            } else {
                 isValidInput = true;
             }
         }
-        return row;
+
+        //Generate input array to return
+        int[] input = new int[2];
+        input[0] = Character.getNumericValue(inputString.charAt(0));
+        input[0]--;
+        input[1] = Character.getNumericValue(inputString.charAt(2));
+        input[1]--;
+
+        return input;
     }
 
 
     private void addSymbolToBoard(int row, int column, char symbol) {
         this.gameBoard[row][column] = symbol;
+        this.gameCounter++;
     }
 
     private boolean checkSquareContainsSymbol(int row, int column) {
@@ -79,7 +172,7 @@ public class NoughtsGame {
 
     private void printGameBoard() {
         //Print numbers identifying board columns
-        System.out.print("  1  2  3");
+        System.out.print("  1  2  3\n");
         int rowNumber = 1;
         //Traverse board
         for (int i=0;i<BOARD_DIMENSION;i++) {
@@ -101,7 +194,7 @@ public class NoughtsGame {
         }
     }
 
-    private void computerMakeMove() {
+    private void computerMove() {
         boolean moveMade = false;
         java.util.Random rand = new java.util.Random();
         while (!moveMade) {

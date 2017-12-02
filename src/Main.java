@@ -3,6 +3,8 @@ import uk.ac.glos.ct5025.games.*;
 public class Main {
     private int gameSelection = 0;
     private int playerSelection = 0;
+    private String player1Name;
+    private String player2Name;
 
     public static void main(String[] args) {
         Main game = new Main();
@@ -10,21 +12,22 @@ public class Main {
         game.playerMenu();
 
         if(game.getGameSelection() == 1) {
-            if(game.getPlayerSelection() == 1) {
-                DiceGame diceGame = new DiceGame(1);
-            }
-            else if (game.getPlayerSelection() == 2) {
-                DiceGame diceGame = new DiceGame(2);
-            }
-            else {
-                DiceGame diceGame = new DiceGame(3);
-            }
+            //DiceGame diceGame = new DiceGame(game.getPlayerSelection());
         }
         else if(game.getGameSelection() == 2) {
-            if(game.getPlayerSelection() == 1) {
-                NoughtsGame noughtsGame = new noughtsGame();
+            String[] names = game.getNames();
+            //Computer vs. computer
+            if (names[0].equals("")) {
+                NoughtsGame noughtsGame = new NoughtsGame();
             }
-            NoughtsGame noughtsGame = new NoughtsGame();
+            //Human vs. computer
+            else if ((names[1].equals(""))) {
+                NoughtsGame noughtsGame = new NoughtsGame(names[0]);
+            }
+            //Human vs. human
+            else {
+                NoughtsGame noughtsGame = new NoughtsGame(names[0], names[1]);
+            }
         }
         else if (game.getGameSelection() == 3) {
             //
@@ -33,22 +36,51 @@ public class Main {
             //
         }
     }
+    
+    public String[] getNames() {
+        String input[] = new String[2];
+        input[0] = "";
+        //If human vs. human selected, ask for name only once
+        if(this.getPlayerSelection() == 1) {
+            System.out.print("\nEnter the name of the human player: ");
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+            input[0] = scanner.next();
+            input[1] = "";
+
+            return input;
+        }
+        else if(this.getPlayerSelection() == 2) {
+            System.out.print("\nEnter the name of the first human player: ");
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+            input[0] = scanner.next();
+
+            System.out.print("\nEnter the name of the second human player: ");
+            input[1] = scanner.next();
+
+            return input;
+        }
+        else {
+            return input;
+        }
+    }
 
     public void playerMenu() {
         while(this.getPlayerSelection()==0) {
             //Print menu
-            System.out.print("\nSelect players:");
+            System.out.print("\n\nSelect players:");
             System.out.print("\n1.  Human vs. Computer");
             System.out.print("\n2.  Human vs. Human");
             System.out.print("\n3.  Computer vs. Computer");
-            System.out.print("\n\nMake selection:");
+            System.out.print("\n\nMake selection: ");
 
             //Instantiate scanner
             java.util.Scanner scanner = new java.util.Scanner(System.in);
             String selection = scanner.next();
 
             //Parse user input
-            if(selection == "1" || selection == "2" || selection == "3") {
+            if(selection.equals("1") || selection.equals("2") || selection.equals("3")) {
                 this.setPlayerSelection(Integer.parseInt(selection));
             }
             else {
@@ -74,8 +106,8 @@ public class Main {
             String selection = scanner.next();
 
             //Parse user input
-            if(selection == "1" || selection == "2" || selection == "3" ||
-                    selection == "4") {
+            if(selection.equals("1") || selection.equals("2") || selection.equals("3") ||
+                    selection.equals("4")) {
                 this.setGameSelection(Integer.parseInt(selection));
             }
             else {
