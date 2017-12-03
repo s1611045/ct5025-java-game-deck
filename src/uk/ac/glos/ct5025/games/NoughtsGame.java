@@ -1,19 +1,14 @@
 package uk.ac.glos.ct5025.games;
 import uk.ac.glos.ct5025.players.*;
 
-public class NoughtsGame {
+public class NoughtsGame extends Game {
     private final int BOARD_DIMENSION = 3;
     private char[][] gameBoard = new char[BOARD_DIMENSION][BOARD_DIMENSION];
     private String winner = "";
-    private Object player1;
-    private Object player2;
-    private char player1Symbol = 'o';
-    private char player2Symbol = 'x';
+    private Player player1;
+    private Player player2;
     private char currentPlayerSymbol = 'o';
-    private int gameCounter = 1;
-    private long startTime = System.currentTimeMillis();
-    private long timeTaken;
-
+    private int gameCounter = 0;
 
     //Instantiate player instances polymorphously based on user input
     public NoughtsGame(String playerName) {
@@ -39,9 +34,15 @@ public class NoughtsGame {
     /////////////////////////////////////////////////////////////////
 
     private void playGame() {
+        long startTime = System.currentTimeMillis();
         while(this.getWinner() == "") {
             //Print board
-            System.out.print("\nIt is currently " + this.currentPlayerSymbol + "'s turn.\n");
+            if (this.currentPlayerSymbol == 'o') {
+                System.out.print("\nIt is currently " + this.player1.name + "'s turn.\n" + "It is turn: " + (this.gameCounter+1) + "\n\n");
+            }
+            else {
+                System.out.print("\nIt is currently " + this.player2.name + "'s turn.\n" + "It is turn: " + (this.gameCounter+1) + "\n\n");
+            }
             this.printGameBoard();
 
             //Get current player type and ask them for move
@@ -49,8 +50,12 @@ public class NoughtsGame {
                 //'If player1 is human, ask them for move'
                 if(player1 instanceof Human) {
                     this.humanMove();
+                    this.gameCounter++;
                     if(this.checkWinner()) {
                         this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else if (this.gameCounter == 9) {
+                        this.setWinner("Draw");
                     }
                     else {
                         this.changeCurrentPlayer();
@@ -58,8 +63,12 @@ public class NoughtsGame {
                 }
                 else {
                     this.computerMove();
+                    this.gameCounter++;
                     if(this.checkWinner()) {
                         this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else if (this.gameCounter == 9) {
+                        this.setWinner("Draw");
                     }
                     else {
                         this.changeCurrentPlayer();
@@ -69,8 +78,12 @@ public class NoughtsGame {
             else {
                 if (player2 instanceof Human) {
                     this.humanMove();
+                    this.gameCounter++;
                     if(this.checkWinner()) {
                         this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else if (this.gameCounter == 9) {
+                        this.setWinner("Draw");
                     }
                     else {
                         this.changeCurrentPlayer();
@@ -78,8 +91,12 @@ public class NoughtsGame {
                 }
                 else {
                     this.computerMove();
+                    this.gameCounter++;
                     if (this.checkWinner()) {
                         this.setWinner(String.valueOf(this.currentPlayerSymbol));
+                    }
+                    else if (this.gameCounter == 9) {
+                        this.setWinner("Draw");
                     }
                     else {
                         this.changeCurrentPlayer();
@@ -89,11 +106,17 @@ public class NoughtsGame {
         }
 
         //Record time taken in game
-        this.timeTaken = ((System.currentTimeMillis() - this.startTime)/1000);
+        this.timeTaken = ((System.currentTimeMillis() - startTime)/1000);
 
         this.printGameBoard();
-        System.out.print(this.currentPlayerSymbol + " wins!");
-        System.out.print("\nThis game took " + this.timeTaken + " seconds.");
+        if (this.getWinner().equals("Draw")) {
+            System.out.print("It's a tie!");
+            System.out.print("\nThis game took " + this.timeTaken + " seconds.");
+        }
+        else {
+            System.out.print(this.currentPlayerSymbol + " wins!");
+            System.out.print("\nThis game took " + this.timeTaken + " seconds.");
+        }
     }
 
     private void humanMove() {
@@ -119,20 +142,27 @@ public class NoughtsGame {
 
         while (!isValidInput) {
             //Get user input
-            System.out.print("Enter the row and column you want to place your symbol in, separated by a comma or space: ");
+            System.out.print("Enter the row and column you want to place your symbol in, separated by a comma: ");
             java.util.Scanner scanner = new java.util.Scanner(System.in);
             inputString = scanner.next();
 
             //Check input is valid
-            if (!((Character.isDigit(inputString.charAt(0))) && (Character.isDigit(inputString.charAt(2))))) {
-                System.out.print("Invalid input! Try again. Error 1\n");
+            try {
+                if (!((Character.isDigit(inputString.charAt(0))) && (Character.isDigit(inputString.charAt(2))))) {
+                    System.out.print("Invalid input! Try again. Error 1: One of your inputs are not a digit.\n");
+                    isValidInput = false;
+                    //Use regex to check numbers are between 1 and 3
+                } else if (!(inputString.matches("^[1-3](.*[1-3])?$"))) {
+                    System.out.print("Invalid input! Try again. Error 2: One of your inputs are not between 1 and 3.\n");
+                    isValidInput = false;
+                } else {
+                    isValidInput = true;
+                }
+            }
+            //Catch exception if user makes input string unexpected size
+            catch (java.lang.StringIndexOutOfBoundsException e) {
+                System.out.print("Invalid input! Try again. Error 3: Bad separator character raising StringIndexOutOfBoundsException\n");
                 isValidInput = false;
-                //Use regex to check numbers are between 1 and 3
-            } else if (!(inputString.matches("^[1-3](.*[1-3])?$"))) {
-                System.out.print("Invalid input! Try again. Error 2\n");
-                isValidInput = false;
-            } else {
-                isValidInput = true;
             }
         }
 
@@ -149,7 +179,6 @@ public class NoughtsGame {
 
     private void addSymbolToBoard(int row, int column, char symbol) {
         this.gameBoard[row][column] = symbol;
-        this.gameCounter++;
     }
 
     private boolean checkSquareContainsSymbol(int row, int column) {

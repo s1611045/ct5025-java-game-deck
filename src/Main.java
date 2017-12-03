@@ -11,9 +11,24 @@ public class Main {
         game.gameMenu();
         game.playerMenu();
 
+        //Dice game selected
         if(game.getGameSelection() == 1) {
-            //DiceGame diceGame = new DiceGame(game.getPlayerSelection());
+            String[] names = game.getNames();
+            //Computer vs. computer
+            if (names[0].equals("")) {
+                DiceGame diceGame = new DiceGame();
+            }
+            //Human vs. computer
+            else if ((names[1].equals(""))) {
+                DiceGame diceGame = new DiceGame(names[0]);
+            }
+            //Human vs. human
+            else {
+                DiceGame diceGame = new DiceGame(names[0], names[1]);
+            }
         }
+
+        //Noughts and crosses selected
         else if(game.getGameSelection() == 2) {
             String[] names = game.getNames();
             //Computer vs. computer
@@ -29,6 +44,8 @@ public class Main {
                 NoughtsGame noughtsGame = new NoughtsGame(names[0], names[1]);
             }
         }
+
+        //Snakes and ladders selected
         else if (game.getGameSelection() == 3) {
             //
         }
@@ -42,11 +59,13 @@ public class Main {
         input[0] = "";
         //If human vs. human selected, ask for name only once
         if(this.getPlayerSelection() == 1) {
-            System.out.print("\nEnter the name of the human player: ");
-            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            while(!this.validName(input)) {
+                System.out.print("\nEnter the name of the human player: ");
+                java.util.Scanner scanner = new java.util.Scanner(System.in);
 
-            input[0] = scanner.next();
-            input[1] = "";
+                input[0] = scanner.next();
+                input[1] = "";
+            }
 
             return input;
         }
@@ -114,6 +133,15 @@ public class Main {
                 System.out.print("Invalid selection! Try again.");
                 System.out.print("\n\n\n");
             }
+        }
+    }
+
+    public boolean validName(String[] input) {
+        if (!(input[0] == "Draw" && input[1] == "Draw")) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 

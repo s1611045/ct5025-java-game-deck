@@ -1,10 +1,9 @@
 package uk.ac.glos.ct5025.players;
 
-public class Human {
-    private String name;
+public class Human extends Player {
 
     public Human(String name) {
-        this.setName(name);
+        this.name = name;
     }
 
     //Encapsulate name field

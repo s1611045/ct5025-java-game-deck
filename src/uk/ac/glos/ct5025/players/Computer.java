@@ -2,9 +2,11 @@ package uk.ac.glos.ct5025.players;
 
 import java.util.ArrayList;
 
-public class Computer {
+public class Computer extends Player {
     //Set name for computer player, assigned randomly
-    private final String NAME = this.generateName();
+    public Computer() {
+        this.name = generateName();
+    }
 
     //Generate list of potential names for computer to use
     private ArrayList<String> createNameArray() {
@@ -33,6 +35,6 @@ public class Computer {
 
     //Encapsulate name field
     public String getName() {
-        return this.NAME;
+        return this.name;
     }
 }
