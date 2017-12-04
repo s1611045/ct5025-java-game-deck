@@ -9,7 +9,6 @@ import java.lang.reflect.Array;
 
 public class DiceGame extends Game{
     private int NUMBER_OF_DICE;
-    private String currentPlayerTurn;
     private int[] player1Array;
     private int[] player2Array;
     private String winner = "";
