@@ -47,7 +47,19 @@ public class Main {
 
         //Snakes and ladders selected
         else if (game.getGameSelection() == 3) {
-            //
+            String[] names = game.getNames();
+            //Computer vs. computer
+            if (names[0].equals("")) {
+                SnakesGame SnakesGame = new SnakesGame();
+            }
+            //Human vs. computer
+            else if ((names[1].equals(""))) {
+                SnakesGame SnakesGame = new SnakesGame(names[0]);
+            }
+            //Human vs. human
+            else {
+                SnakesGame snakesGame = new SnakesGame(names[0], names[1]);
+            }
         }
         else {
             //

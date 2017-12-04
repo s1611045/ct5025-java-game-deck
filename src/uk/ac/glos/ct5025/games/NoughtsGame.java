@@ -114,7 +114,12 @@ public class NoughtsGame extends Game {
             System.out.print("\nThis game took " + this.timeTaken + " seconds.");
         }
         else {
-            System.out.print(this.currentPlayerSymbol + " wins!");
+            if (this.currentPlayerSymbol == 'o') {
+                System.out.print(this.player1.name + " wins!");
+            }
+            else {
+                System.out.print(this.player2.name + " wins!");
+            }
             System.out.print("\nThis game took " + this.timeTaken + " seconds.");
         }
     }
