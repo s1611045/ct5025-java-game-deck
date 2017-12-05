@@ -13,7 +13,7 @@ public class Main {
 
         //Dice game selected
         if(game.getGameSelection() == 1) {
-            String[] names = game.getNames();
+            String[] names = game.getNames(game.playerSelection);
             //Computer vs. computer
             if (names[0].equals("")) {
                 DiceGame diceGame = new DiceGame();
@@ -30,7 +30,7 @@ public class Main {
 
         //Noughts and crosses selected
         else if(game.getGameSelection() == 2) {
-            String[] names = game.getNames();
+            String[] names = game.getNames(game.playerSelection);
             //Computer vs. computer
             if (names[0].equals("")) {
                 NoughtsGame noughtsGame = new NoughtsGame();
@@ -47,7 +47,7 @@ public class Main {
 
         //Snakes and ladders selected
         else if (game.getGameSelection() == 3) {
-            String[] names = game.getNames();
+            String[] names = game.getNames(game.playerSelection);
             //Computer vs. computer
             if (names[0].equals("")) {
                 SnakesGame SnakesGame = new SnakesGame();
@@ -66,22 +66,29 @@ public class Main {
         }
     }
     
-    public String[] getNames() {
+    public String[] getNames(int players) {
         String input[] = new String[2];
         input[0] = "";
+        boolean validName = false;
+
         //If human vs. human selected, ask for name only once
-        if(this.getPlayerSelection() == 1) {
-            while(!this.validName(input)) {
+        if(players == 1) {
+            while(!validName) {
                 System.out.print("\nEnter the name of the human player: ");
                 java.util.Scanner scanner = new java.util.Scanner(System.in);
 
                 input[0] = scanner.next();
                 input[1] = "";
+                if (this.validateName(input)) {
+                    validName = true;
+                }
+                else {
+                    System.out.print("\nThat name is not allowed! Try again.\n");
+                }
             }
-
             return input;
         }
-        else if(this.getPlayerSelection() == 2) {
+        else if(players == 2) {
             System.out.print("\nEnter the name of the first human player: ");
             java.util.Scanner scanner = new java.util.Scanner(System.in);
 
@@ -148,8 +155,8 @@ public class Main {
         }
     }
 
-    public boolean validName(String[] input) {
-        if (!(input[0] == "Draw" && input[1] == "Draw")) {
+    public boolean validateName(String[] input) {
+        if (!(input[0].equals("Draw")) && !(input[1].equals("Draw"))) {
             return true;
         }
         else {

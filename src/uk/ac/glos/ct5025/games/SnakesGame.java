@@ -45,9 +45,6 @@ public class SnakesGame extends Game {
         int[] snakes = this.allocateSnakes();
         int[] ladders = this.allocateLadders();
 
-        System.out.print("\nThere are snakes at: " + snakes.toString());
-        System.out.print("\nThere are ladders at: " + ladders.toString());
-
         //Initialise local game variables
         long startTime = System.currentTimeMillis();
 
@@ -62,7 +59,7 @@ public class SnakesGame extends Game {
 
             //Player 1
             if ((currentPlayerTurn.equals(this.player1.name)) && (player1 instanceof Human)) {
-                System.out.print("\nPress ENTER to make your move. The die will be rolled for you: \n");
+                System.out.print("\nPress ENTER twice to make your move. The die will be rolled for you: \n");
                 java.util.Scanner scanner = new java.util.Scanner(System.in);
                 String blank = scanner.nextLine();
 
@@ -89,7 +86,7 @@ public class SnakesGame extends Game {
             }
             //Player 2
             else if ((currentPlayerTurn.equals(this.player2.name)) && (player2 instanceof Human)) {
-                System.out.print("\nPress ENTER to make your move. The die will be rolled for you: \n");
+                System.out.print("\nPress ENTER twice to make your move. The die will be rolled for you: \n");
                 java.util.Scanner scanner = new java.util.Scanner(System.in);
                 String blank = scanner.nextLine();
 
