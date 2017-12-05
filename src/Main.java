@@ -12,7 +12,6 @@ public class Main {
         while (!(selection == 5)) {
             Main game = new Main();
             game.gameMenu();
-            //game.playerMenu();
 
             //Dice game selected
             if (game.getGameSelection() == 1) {
@@ -145,7 +144,7 @@ public class Main {
     public void gameMenu() {
         while(this.getGameSelection()==0) {
             //Print game menu
-            System.out.print("Welcome to CT5025 Java Game Deck.");
+            System.out.print("\nWelcome to CT5025 Java Game Deck.");
             System.out.print("\nPlease select an option:\n");
             System.out.print("\n1.  Play Dice Game");
             System.out.print("\n2.  Play Noughts & Crosses");
@@ -202,7 +201,7 @@ public class Main {
                         reader.readLine();
                         lineCounter++;
                     }
-                    for (int i=fileLength-10;i<=fileLength;i++) {
+                    for (int i=fileLength-10;i<fileLength;i++) {
                         String[] lineContents;
                         lineContents = reader.readLine().split(",");
                         this.printStatistic(lineContents, game);
@@ -224,6 +223,12 @@ public class Main {
             System.out.print("The scores file does not exist. Either you have not played a game yet, or the" +
                     " file has been deleted.");
         }
+
+        //Return to menu
+        System.out.print("Press ENTER to return to menu: ");
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+        String blank = scanner.nextLine();
     }
 
     private void printStatistic(String[] line, int game) {
@@ -263,7 +268,7 @@ public class Main {
                 System.out.print("\n    Snakes fallen: " + line[i]);
             }
         }
-        System.out.print("\n\n");
+        System.out.print("\n");
     }
 
     private boolean checkFileExists() {

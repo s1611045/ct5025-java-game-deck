@@ -117,8 +117,16 @@ public class DiceGame extends Game{
         this.timeTaken = ((System.currentTimeMillis() - startTime)/1000);
         System.out.print("\nThis game took " + this.timeTaken + " seconds.");
 
+        //Generate scorecard and save to file
         DiceGameScorecard scorecard = this.generateScorecard();
         scorecard.saveScorecard();
+        System.out.print("\nScores saved to file.");
+
+        //Return to menu
+        System.out.print("\nPress ENTER to return to menu: ");
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+        String blank = scanner.nextLine();
     }
 
     public DiceGameScorecard generateScorecard() {

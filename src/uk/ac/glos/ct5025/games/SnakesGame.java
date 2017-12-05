@@ -132,6 +132,12 @@ public class SnakesGame extends Game {
                 turnCounter, this.winningScore, this.laddersClimbed, this.snakesFallen);
         scorecard.saveScorecard();
         System.out.print("\nScores saved to file.");
+
+        //Return to menu
+        System.out.print("\nPress ENTER to return to menu: ");
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+        String blank = scanner.nextLine();
     }
 
     public int[] allocateLadders() {
