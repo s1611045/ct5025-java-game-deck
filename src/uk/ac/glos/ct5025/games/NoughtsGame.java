@@ -1,5 +1,6 @@
 package uk.ac.glos.ct5025.games;
 import uk.ac.glos.ct5025.players.*;
+import uk.ac.glos.ct5025.scorecards.*;
 
 public class NoughtsGame extends Game {
     private final int BOARD_DIMENSION = 3;
@@ -122,6 +123,11 @@ public class NoughtsGame extends Game {
             }
             System.out.print("\nThis game took " + this.timeTaken + " seconds.");
         }
+
+        //Generate scorecard and save to file
+        NoughtsGameScorecard scorecard = new NoughtsGameScorecard(this.getWinner(), this.getWinnerType(), timeTaken,
+                this.gameCounter, this.currentPlayerSymbol);
+        scorecard.saveScorecard();
     }
 
     private void humanMove() {
@@ -137,6 +143,24 @@ public class NoughtsGame extends Game {
                 addSymbolToBoard(move[0], move[1], this.currentPlayerSymbol);
                 moveMade = true;
             }
+        }
+    }
+
+    public String getWinnerType() {
+        if (this.getWinner().equals("Draw")) {
+            return "None";
+        }
+        else if (this.getWinner().equals(this.player1.name) && player1 instanceof Human) {
+            return "Human";
+        }
+        else if (this.getWinner().equals(this.player1.name) && player1 instanceof Computer) {
+            return "Computer";
+        }
+        else if (this.getWinner().equals(this.player2.name) && player2 instanceof Human) {
+            return "Human";
+        }
+        else {
+            return "Computer";
         }
     }
 

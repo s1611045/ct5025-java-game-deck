@@ -13,7 +13,7 @@ public class DiceGameScorecard extends Scorecard {
     }
     public void saveScorecard() {
         //Generate string of results
-        String results = ("Dice" + "," + this.getWinner() + "," + this.getWinnerType() + "," + Long.toString(this.getTimeTaken())
+        String results = ("Dice Game" + "," + this.getWinner() + "," + this.getWinnerType() + "," + Long.toString(this.getTimeTaken())
         + "," + Integer.toString(this.getNumberOfDice()) + "," + Integer.toString(this.getWinningScore()));
 
         //Save file

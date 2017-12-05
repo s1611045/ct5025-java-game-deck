@@ -13,7 +13,7 @@ public class SnakesGame extends Game {
     private String winner = "";
     private int laddersClimbed = 0;
     private int snakesFallen = 0;
-    private SnakesGameScorecard scorecard = new SnakesGameScorecard();
+    private int winningScore;
 
     //Instantiate player instances polymorphously based on user input
     public SnakesGame(String playerName) {
@@ -49,6 +49,7 @@ public class SnakesGame extends Game {
 
         //Initialise local game variables
         long startTime = System.currentTimeMillis();
+        int turnCounter = 1;
 
         //Play game
         this.currentPlayerTurn = player1.name;
@@ -57,7 +58,7 @@ public class SnakesGame extends Game {
         while(this.getWinner().equals("")) {
             //Print board
             this.printGameBoard();
-            System.out.print("\nIt is " + this.currentPlayerTurn + "'s turn.");
+            System.out.print("\nIt is " + this.currentPlayerTurn + "'s turn. It is turn: " + turnCounter);
 
             //Player 1
             if ((currentPlayerTurn.equals(this.player1.name)) && (player1 instanceof Human)) {
@@ -68,6 +69,7 @@ public class SnakesGame extends Game {
                 this.player1Position = this.makeMove(this.player1Position, snakes, ladders);
                 System.out.print("\nYour new position is: "+ this.player1Position);
                 if (this.checkWinner(this.player1Position)) {
+                    this.winningScore = player1Position;
                     this.setWinner(this.currentPlayerTurn);
                 }
                 else {
@@ -80,6 +82,7 @@ public class SnakesGame extends Game {
                 this.player1Position = this.makeMove(this.player1Position, snakes, ladders);
                 System.out.print("\n" + this.player1.name + "'s new position is: " + this.player1Position + "\n");
                 if (this.checkWinner(this.player1Position)) {
+                    this.winningScore = player1Position;
                     this.setWinner(this.currentPlayerTurn);
                 }
                 else{
@@ -95,6 +98,7 @@ public class SnakesGame extends Game {
                 this.player2Position = this.makeMove(this.player2Position, snakes, ladders);
                 System.out.print("\nYour new position is: "+ this.player2Position + "\n");
                 if (this.checkWinner(this.player2Position)) {
+                    this.winningScore = this.player2Position;
                     this.setWinner(this.currentPlayerTurn);
                 }
                 else {
@@ -107,12 +111,14 @@ public class SnakesGame extends Game {
                 this.player2Position = this.makeMove(this.player2Position, snakes, ladders);
                 System.out.print("\n" + this.player2.name + "'s new position is: " + this.player2Position + "\n");
                 if (this.checkWinner(this.player2Position)) {
+                    this.winningScore = player2Position;
                     this.setWinner(this.currentPlayerTurn);
                 }
                 else{
                     this.changeCurrentPlayerTurn();
                 }
             }
+            turnCounter++;
         }
         //Stop timer upon finding winner
         long timeTaken = ((System.currentTimeMillis() - startTime)/1000);
@@ -120,6 +126,12 @@ public class SnakesGame extends Game {
         //Print winner & time
         System.out.print("\n" + this.currentPlayerTurn + " wins!\n");
         System.out.print("\nThis game took " + timeTaken + " seconds.");
+
+        //Generate scorecard and save file
+        SnakesGameScorecard scorecard = new SnakesGameScorecard(this.getWinner(), this.getWinnerType(), timeTaken,
+                turnCounter, this.winningScore, this.laddersClimbed, this.snakesFallen);
+        scorecard.saveScorecard();
+        System.out.print("\nScores saved to file.");
     }
 
     public int[] allocateLadders() {
@@ -167,6 +179,24 @@ public class SnakesGame extends Game {
         }
         else {
             return false;
+        }
+    }
+
+    public String getWinnerType() {
+        if (this.getWinner().equals("Draw")) {
+            return "None";
+        }
+        else if (this.getWinner().equals(this.player1.name) && player1 instanceof Human) {
+            return "Human";
+        }
+        else if (this.getWinner().equals(this.player1.name) && player1 instanceof Computer) {
+            return "Computer";
+        }
+        else if (this.getWinner().equals(this.player2.name) && player2 instanceof Human) {
+            return "Human";
+        }
+        else {
+            return "Computer";
         }
     }
 

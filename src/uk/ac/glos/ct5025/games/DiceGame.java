@@ -129,7 +129,6 @@ public class DiceGame extends Game{
     }
 
     public String getWinnerType() {
-        String winnerType;
         if (this.getWinner().equals("Draw")) {
             return "None";
         }

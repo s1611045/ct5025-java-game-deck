@@ -3,29 +3,38 @@ package uk.ac.glos.ct5025.scorecards;
 import java.io.*;
 
 public abstract class Scorecard {
-    private String gameType;
     private String winner;
     private String winnerType;
     private long timeTaken;
 
     void saveFile(String stringToSave) {
         if (checkFileExists()) {
-            try {
                 //Generate file writer
                 File file = new File("scores.txt");
-                PrintStream printStream = new PrintStream(file);
-
-                //Save data to file
-                printStream.println(stringToSave);
-                printStream.close();
+                try {
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+                    //Save data to file
+                    writer.write(stringToSave +"\n");
+                    writer.close();
+                }
+                catch (java.io.IOException e) {
+                    System.out.print("An error occurred. Error code: " + e.getMessage());
+                }
+        }
+        else {
+            //Create new file and save data to file
+            try {
+                PrintWriter writer = new PrintWriter("scores.txt");
+                writer.println(stringToSave);
+                writer.close();
             }
-            catch (java.io.FileNotFoundException e) {
-                System.out.print("The file does not exist. Check it has not been moved. Error code: " + e.getMessage());
+            catch (FileNotFoundException e) {
+                System.out.print("An error occurred: " + e.getMessage());
             }
         }
     }
 
-    boolean checkFileExists() {
+    private boolean checkFileExists() {
         File scoreFile = new File("scores.txt");
         if (scoreFile.exists()) {
             return true;
@@ -33,14 +42,6 @@ public abstract class Scorecard {
         else {
             return false;
         }
-    }
-
-    public String getGameType() {
-        return gameType;
-    }
-
-    public void setGameType(String gameType) {
-        this.gameType = gameType;
     }
 
     public String getWinner() {

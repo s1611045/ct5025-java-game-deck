@@ -1,66 +1,82 @@
 import uk.ac.glos.ct5025.games.*;
+import java.io.*;
 
 public class Main {
     private int gameSelection = 0;
     private int playerSelection = 0;
+    private int computerWins = 0;
+    private int humanWins = 0;
 
     public static void main(String[] args) {
-        Main game = new Main();
-        game.gameMenu();
-        game.playerMenu();
+        int selection = 0;
+        while (!(selection == 5)) {
+            Main game = new Main();
+            game.gameMenu();
+            //game.playerMenu();
 
-        //Dice game selected
-        if(game.getGameSelection() == 1) {
-            String[] names = game.getNames(game.playerSelection);
-            //Computer vs. computer
-            if (names[0].equals("")) {
-                DiceGame diceGame = new DiceGame();
+            //Dice game selected
+            if (game.getGameSelection() == 1) {
+                game.playerMenu();
+                String[] names = game.getNames(game.playerSelection);
+                //Computer vs. computer
+                if (names[0].equals("")) {
+                    DiceGame diceGame = new DiceGame();
+                }
+                //Human vs. computer
+                else if ((names[1].equals(""))) {
+                    DiceGame diceGame = new DiceGame(names[0]);
+                }
+                //Human vs. human
+                else {
+                    DiceGame diceGame = new DiceGame(names[0], names[1]);
+                }
             }
-            //Human vs. computer
-            else if ((names[1].equals(""))) {
-                DiceGame diceGame = new DiceGame(names[0]);
-            }
-            //Human vs. human
-            else {
-                DiceGame diceGame = new DiceGame(names[0], names[1]);
-            }
-        }
 
-        //Noughts and crosses selected
-        else if(game.getGameSelection() == 2) {
-            String[] names = game.getNames(game.playerSelection);
-            //Computer vs. computer
-            if (names[0].equals("")) {
-                NoughtsGame noughtsGame = new NoughtsGame();
+            //Noughts and crosses selected
+            else if (game.getGameSelection() == 2) {
+                game.playerMenu();
+                String[] names = game.getNames(game.playerSelection);
+                //Computer vs. computer
+                if (names[0].equals("")) {
+                    NoughtsGame noughtsGame = new NoughtsGame();
+                }
+                //Human vs. computer
+                else if ((names[1].equals(""))) {
+                    NoughtsGame noughtsGame = new NoughtsGame(names[0]);
+                }
+                //Human vs. human
+                else {
+                    NoughtsGame noughtsGame = new NoughtsGame(names[0], names[1]);
+                }
             }
-            //Human vs. computer
-            else if ((names[1].equals(""))) {
-                NoughtsGame noughtsGame = new NoughtsGame(names[0]);
-            }
-            //Human vs. human
-            else {
-                NoughtsGame noughtsGame = new NoughtsGame(names[0], names[1]);
-            }
-        }
 
-        //Snakes and ladders selected
-        else if (game.getGameSelection() == 3) {
-            String[] names = game.getNames(game.playerSelection);
-            //Computer vs. computer
-            if (names[0].equals("")) {
-                SnakesGame SnakesGame = new SnakesGame();
+            //Snakes and ladders selected
+            else if (game.getGameSelection() == 3) {
+                game.playerMenu();
+                String[] names = game.getNames(game.playerSelection);
+                //Computer vs. computer
+                if (names[0].equals("")) {
+                    SnakesGame SnakesGame = new SnakesGame();
+                }
+                //Human vs. computer
+                else if ((names[1].equals(""))) {
+                    SnakesGame SnakesGame = new SnakesGame(names[0]);
+                }
+                //Human vs. human
+                else {
+                    SnakesGame snakesGame = new SnakesGame(names[0], names[1]);
+                }
             }
-            //Human vs. computer
-            else if ((names[1].equals(""))) {
-                SnakesGame SnakesGame = new SnakesGame(names[0]);
+
+            //View game results elected
+            else if (game.getGameSelection() == 4) {
+                game.readScoreFile();
             }
-            //Human vs. human
+
+            //Exit game selected
             else {
-                SnakesGame snakesGame = new SnakesGame(names[0], names[1]);
+                selection = 5;
             }
-        }
-        else {
-            //
         }
     }
     
@@ -135,6 +151,7 @@ public class Main {
             System.out.print("\n2.  Play Noughts & Crosses");
             System.out.print("\n3.  Play Snakes & Ladders");
             System.out.print("\n4.  View Game Results");
+            System.out.print("\n5.  Exit");
             System.out.print("\n\nMake selection: ");
 
             //Instantiate scanner
@@ -143,13 +160,119 @@ public class Main {
 
             //Parse user input
             if(selection.equals("1") || selection.equals("2") || selection.equals("3") ||
-                    selection.equals("4")) {
+                    selection.equals("4") || selection.equals("5")) {
                 this.setGameSelection(Integer.parseInt(selection));
             }
             else {
                 System.out.print("Invalid selection! Try again.");
                 System.out.print("\n\n\n");
             }
+        }
+    }
+
+    public void readScoreFile() {
+        if(checkFileExists()) {
+            File file = new File("scores.txt");
+            int fileLength = 0;
+            try {
+                FileReader lengthFileReader = new FileReader(file);
+                FileReader fileReader = new FileReader(file);
+                BufferedReader lengthReader = new BufferedReader(lengthFileReader);
+                BufferedReader reader = new BufferedReader(fileReader);
+
+                while(lengthReader.readLine() != null) {
+                    fileLength++;
+                }
+                //Close to reset reader after use
+                lengthReader.close();
+
+                if (fileLength <= 10) {
+                    int game = 1;
+                    for (int i=0;i<=fileLength-1;i++) {
+                        String[] lineContents;
+                        lineContents = reader.readLine().split(",");
+                        this.printStatistic(lineContents, game);
+                        game++;
+                    }
+                }
+                else {
+                    int lineCounter = 0;
+                    int game = 1;
+                    while (lineCounter < fileLength-10) {
+                        reader.readLine();
+                        lineCounter++;
+                    }
+                    for (int i=fileLength-10;i<=fileLength;i++) {
+                        String[] lineContents;
+                        lineContents = reader.readLine().split(",");
+                        this.printStatistic(lineContents, game);
+                        game++;
+                    }
+                    reader.close();
+                }
+                System.out.print("Humans have won " + this.humanWins + " games and computers have won " + this.computerWins
+                + " games.\n\n");
+            }
+            catch (FileNotFoundException e) {
+                System.out.print("The scores file could not be found! Error code: " + e.getMessage());
+            }
+            catch (IOException e) {
+                System.out.print("There is a problem with the scores file. Error code: " + e.getMessage());
+            }
+        }
+        else {
+            System.out.print("The scores file does not exist. Either you have not played a game yet, or the" +
+                    " file has been deleted.");
+        }
+    }
+
+    private void printStatistic(String[] line, int game) {
+        System.out.print("\n\nGame #" + game);
+        for (int i=0;i<line.length;i++) {
+            if (i == 0) {
+                System.out.print("\n    Game name: " + line[i]);
+            }
+            else if (i == 1) {
+                System.out.print("\n    Winner: " + line[i]);
+            }
+            else if (i == 2) {
+                //Add human win to counter if human was the winner
+                if (line[i].equals("Human")) {
+                    this.humanWins++;
+                }
+                //Otherwise add computer win to counter
+                else {
+                    this.computerWins++;
+                }
+                //Print winner type regardless
+                System.out.print("\n    Winner type: " + line[i]);
+            }
+            else if (i == 3) {
+                System.out.print("\n    Time taken (seconds): " + line[i]);
+            }
+            else if (i == 4) {
+                System.out.print("\n    Number of dice/number of turns taken: " + line[i]);
+            }
+            else if (i == 5) {
+                System.out.print("\n    Final score/winning symbol: " + line[i]);
+            }
+            else if (i == 6) {
+                System.out.print("\n    Ladders climbed: " + line[i]);
+            }
+            else {
+                System.out.print("\n    Snakes fallen: " + line[i]);
+            }
+        }
+        System.out.print("\n\n");
+    }
+
+    private boolean checkFileExists() {
+        File scoreFile = new File("scores.txt");
+        if (scoreFile.exists()) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
