@@ -4,8 +4,9 @@ public class SnakesGameScorecard extends Scorecard {
     private int numberOfTurns;
     private int laddersClimbed;
     private int snakesFallen;
+    private int finalScore;
 
-    //Encapsulate fields
+
     public int getNumberOfTurns() {
         return numberOfTurns;
     }
@@ -28,5 +29,13 @@ public class SnakesGameScorecard extends Scorecard {
 
     public void setSnakesFallen(int snakesFallen) {
         this.snakesFallen = snakesFallen;
+    }
+
+    public int getFinalScore() {
+        return finalScore;
+    }
+
+    public void setFinalScore(int finalScore) {
+        this.finalScore = finalScore;
     }
 }

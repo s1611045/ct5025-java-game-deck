@@ -2,9 +2,9 @@ package uk.ac.glos.ct5025.scorecards;
 
 public class DiceGameScorecard extends Scorecard {
     private int numberOfDice;
-    private int numberOfRounds;
+    private int winningScore;
 
-    //Encapsulate fields
+
     public int getNumberOfDice() {
         return numberOfDice;
     }
@@ -13,11 +13,11 @@ public class DiceGameScorecard extends Scorecard {
         this.numberOfDice = numberOfDice;
     }
 
-    public int getNumberOfRounds() {
-        return numberOfRounds;
+    public int getWinningScore() {
+        return winningScore;
     }
 
-    public void setNumberOfRounds(int numberOfRounds) {
-        this.numberOfRounds = numberOfRounds;
+    public void setWinningScore(int winningScore) {
+        this.winningScore = winningScore;
     }
 }

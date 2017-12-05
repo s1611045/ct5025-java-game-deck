@@ -11,6 +11,8 @@ public class SnakesGame extends Game {
     private int player2Position = 1;
     private String currentPlayerTurn = "";
     private String winner = "";
+    private int laddersClimbed = 0;
+    private int snakesFallen = 0;
     private SnakesGameScorecard scorecard = new SnakesGameScorecard();
 
     //Instantiate player instances polymorphously based on user input
@@ -186,11 +188,13 @@ public class SnakesGame extends Game {
         if (this.checkSnakeOrLadder(position, snakes)) {
             System.out.print("\nYou landed on a snake! Your position decreases by 10.");
             position = position - 10;
+            this.snakesFallen++;
         }
         //Check for ladder
         else if (this.checkSnakeOrLadder(position, ladders)) {
             System.out.print("\nYou landed on a ladder! Your position increases by 10.");
             position = position + 10;
+            this.laddersClimbed++;
         }
         return position;
     }
