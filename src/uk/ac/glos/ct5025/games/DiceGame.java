@@ -12,7 +12,7 @@ public class DiceGame extends Game{
     private int[] player1Array;
     private int[] player2Array;
     private String winner = "";
-    private DiceGameScorecard scorecard = new DiceGameScorecard();
+    private int winningScore;
 
     //Instantiate player instances polymorphously based on user input
     public DiceGame(String playerName) {
@@ -96,9 +96,11 @@ public class DiceGame extends Game{
             //Compare results and set winner accordingly
             if (player1Total > player2Total) {
                 this.setWinner(player1.name);
+                this.setWinningScore(player1Total);
             }
             else if (player1Total < player2Total) {
                 this.setWinner(player2.name);
+                this.setWinningScore(player2Total);
             }
             else {
                 this.setWinner("Draw");
@@ -114,6 +116,35 @@ public class DiceGame extends Game{
 
         this.timeTaken = ((System.currentTimeMillis() - startTime)/1000);
         System.out.print("\nThis game took " + this.timeTaken + " seconds.");
+
+        DiceGameScorecard scorecard = this.generateScorecard();
+        scorecard.saveScorecard();
+    }
+
+    public DiceGameScorecard generateScorecard() {
+        String winnerType = this.getWinnerType();
+
+        return new DiceGameScorecard(this.getWinner(), winnerType, this.timeTaken, this.NUMBER_OF_DICE,
+                this.getWinningScore());
+    }
+
+    public String getWinnerType() {
+        String winnerType;
+        if (this.getWinner().equals("Draw")) {
+            return "None";
+        }
+        else if (this.getWinner().equals(this.player1.name) && player1 instanceof Human) {
+            return "Human";
+        }
+        else if (this.getWinner().equals(this.player1.name) && player1 instanceof Computer) {
+            return "Computer";
+        }
+        else if (this.getWinner().equals(this.player2.name) && player2 instanceof Human) {
+            return "Human";
+        }
+        else {
+            return "Computer";
+        }
     }
 
     public void printCurrentTurn() {
@@ -173,5 +204,13 @@ public class DiceGame extends Game{
 
     public void setWinner(String winner) {
         this.winner = winner;
+    }
+
+    public int getWinningScore() {
+        return winningScore;
+    }
+
+    public void setWinningScore(int winningScore) {
+        this.winningScore = winningScore;
     }
 }

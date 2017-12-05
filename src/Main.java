@@ -3,8 +3,6 @@ import uk.ac.glos.ct5025.games.*;
 public class Main {
     private int gameSelection = 0;
     private int playerSelection = 0;
-    private String player1Name;
-    private String player2Name;
 
     public static void main(String[] args) {
         Main game = new Main();
