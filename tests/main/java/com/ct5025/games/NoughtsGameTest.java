@@ -131,29 +131,29 @@ public class NoughtsGameTest {
         noughtsGame.addSymbolToBoard(1,1,'o');
         noughtsGame.addSymbolToBoard(2,2,'o');
         //Test that there is a win condition in columns
-        assertTrue(noughtsGame.checkColumns());
+        assertTrue(noughtsGame.checkDiags());
         //Add other symbols to create a win condition in column 0
         noughtsGame.addSymbolToBoard(0,0,'x');
         noughtsGame.addSymbolToBoard(1,1,'x');
         noughtsGame.addSymbolToBoard(2,2,'x');
+        //Test that there is a win condition
+        assertTrue(noughtsGame.checkDiags());
         //Remove symbols used
         noughtsGame.addSymbolToBoard(0,0,' ');
         noughtsGame.addSymbolToBoard(1,1, ' ');
         noughtsGame.addSymbolToBoard(2,2,' ');
-        //Test that there is a win condition
-        assertTrue(noughtsGame.checkColumns());
         //Change symbols to create a win condition in other diagonal direction
         noughtsGame.addSymbolToBoard(0,2,'o');
         noughtsGame.addSymbolToBoard(1,1,'o');
         noughtsGame.addSymbolToBoard(2,0,'o');
         //Test that there is a win condition in columns
-        assertTrue(noughtsGame.checkColumns());
+        assertTrue(noughtsGame.checkDiags());
         //Add other symbols to create a win condition in other diagonal direction
         noughtsGame.addSymbolToBoard(0,2,'x');
         noughtsGame.addSymbolToBoard(1,1,'x');
         noughtsGame.addSymbolToBoard(2,0,'x');
         //Test that there is a win condition
-        assertTrue(noughtsGame.checkColumns());
+        assertTrue(noughtsGame.checkDiags());
         //Remove symbols used
         noughtsGame.addSymbolToBoard(0,2,' ');
         noughtsGame.addSymbolToBoard(1,1, ' ');

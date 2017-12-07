@@ -18,25 +18,22 @@ public class NoughtsGame extends Game {
         System.out.print("Starting new game with human vs. computer\n");
         this.player1 = new Human(playerName);
         this.player2 = new Computer();
-        this.playGame();
     }
 
     public NoughtsGame(String player1Name, String player2Name) {
         System.out.print("Starting new game with human vs. human\n");
         this.player1 = new Human(player1Name);
         this.player2 = new Human(player2Name);
-        this.playGame();
     }
 
     public NoughtsGame() {
         System.out.print("Starting new game with computer vs. computer\n");
         this.player1 = new Computer();
         this.player2 = new Computer();
-        this.playGame();
     }
     /////////////////////////////////////////////////////////////////
 
-    private void playGame() {
+    public void playGame() {
         long startTime = System.currentTimeMillis();
         while(this.getWinner() == "") {
             //Print board

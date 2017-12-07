@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SnakesGameTest {
+    //Instantiate game object
     SnakesGame game = new SnakesGame();
 
     @Test

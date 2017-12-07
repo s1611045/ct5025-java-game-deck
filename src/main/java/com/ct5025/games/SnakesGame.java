@@ -20,21 +20,18 @@ public class SnakesGame extends Game {
         System.out.print("Starting new game with human vs. computer\n");
         this.player1 = new Human(playerName);
         this.player2 = new Computer();
-        this.playGame();
     }
 
     public SnakesGame(String player1Name, String player2Name) {
         System.out.print("Starting new game with human vs. human\n");
         this.player1 = new Human(player1Name);
         this.player2 = new Human(player2Name);
-        this.playGame();
     }
 
     public SnakesGame() {
         System.out.print("Starting new game with computer vs. computer\n");
         this.player1 = new Computer();
         this.player2 = new Computer();
-        this.playGame();
     }
     /////////////////////////////////////////////////////////////////
 

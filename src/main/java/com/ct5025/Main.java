@@ -26,14 +26,17 @@ public class Main {
                 //Computer vs. computer
                 if (names[0].equals("")) {
                     DiceGame diceGame = new DiceGame();
+                    diceGame.playGame();
                 }
                 //Human vs. computer
                 else if ((names[1].equals(""))) {
                     DiceGame diceGame = new DiceGame(names[0]);
+                    diceGame.playGame();
                 }
                 //Human vs. human
                 else {
                     DiceGame diceGame = new DiceGame(names[0], names[1]);
+                    diceGame.playGame();
                 }
             }
 
@@ -44,14 +47,17 @@ public class Main {
                 //Computer vs. computer
                 if (names[0].equals("")) {
                     NoughtsGame noughtsGame = new NoughtsGame();
+                    noughtsGame.playGame();
                 }
                 //Human vs. computer
                 else if ((names[1].equals(""))) {
                     NoughtsGame noughtsGame = new NoughtsGame(names[0]);
+                    noughtsGame.playGame();
                 }
                 //Human vs. human
                 else {
                     NoughtsGame noughtsGame = new NoughtsGame(names[0], names[1]);
+                    noughtsGame.playGame();
                 }
             }
 
@@ -61,15 +67,18 @@ public class Main {
                 String[] names = game.getNames(game.playerSelection);
                 //Computer vs. computer
                 if (names[0].equals("")) {
-                    SnakesGame SnakesGame = new SnakesGame();
+                    SnakesGame snakesGame = new SnakesGame();
+                    snakesGame.playGame();
                 }
                 //Human vs. computer
                 else if ((names[1].equals(""))) {
-                    SnakesGame SnakesGame = new SnakesGame(names[0]);
+                    SnakesGame snakesGame = new SnakesGame(names[0]);
+                    snakesGame.playGame();
                 }
                 //Human vs. human
                 else {
                     SnakesGame snakesGame = new SnakesGame(names[0], names[1]);
+                    snakesGame.playGame();
                 }
             }
 

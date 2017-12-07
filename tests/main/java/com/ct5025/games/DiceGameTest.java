@@ -6,9 +6,15 @@ import static org.junit.Assert.*;
 public class DiceGameTest {
     @Test
     public void getWinnerType() {
+        //Instantiate game objects based on player types
         DiceGame computerVsComputerGame = new DiceGame();
         DiceGame humanVsComputerGame = new DiceGame("humanPlayer");
         DiceGame humanVsHumanGame = new DiceGame("humanPlayer1", "humanPlayer2");
+
+        //Set number of dice used in game to generic value to avoid test hanging while waiting for user input
+        computerVsComputerGame.setNUMBER_OF_DICE(1);
+        humanVsComputerGame.setNUMBER_OF_DICE(1);
+        humanVsHumanGame.setNUMBER_OF_DICE(1);
 
         /////////////////////////////////////////////////////////////////////////////////
         //TEST SUITES:
@@ -16,10 +22,10 @@ public class DiceGameTest {
         //The code being tested is written VERBATIM in the other game classes, with the same inputs,
         //therefore this specific test is only being tested in this class, and not the others.
         //
-        //Set winner to 'draw'
+        //Set winner to 'Draw' i.e. the game resulted in a draw
         computerVsComputerGame.setWinner("Draw");
-        //Test that if the winner is 'draw', 'Draw' is returned as the winnerType
-        assertEquals("Draw",computerVsComputerGame.getWinnerType());
+        //Test that if the winner is 'Draw', 'None' is returned as the winnerType
+        assertEquals("None",computerVsComputerGame.getWinnerType());
         //No need to test other objects for this as they are the same class with same methods
         //
         //

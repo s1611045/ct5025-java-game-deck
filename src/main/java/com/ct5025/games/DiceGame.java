@@ -5,12 +5,8 @@ import main.java.com.ct5025.scorecards.DiceGameScorecard;
 
 import java.lang.reflect.Array;
 
-//TODO: assign players correctly based on input from main menu
-//      currently, if option 1 in player selection (human vs. computer)
-//      is chosen, the game starts with computer vs. computer
-
 public class DiceGame extends Game{
-    private int NUMBER_OF_DICE;
+    private int NUMBER_OF_DICE = 0;
     private int[] player1Array;
     private int[] player2Array;
     private String winner = "";
@@ -21,28 +17,25 @@ public class DiceGame extends Game{
         System.out.print("Starting new game with human vs. computer\n");
         this.player1 = new Human(playerName);
         this.player2 = new Computer();
-        this.NUMBER_OF_DICE = askForDice();
-        this.playGame();
     }
 
     public DiceGame(String player1Name, String player2Name) {
         System.out.print("Starting new game with human vs. human\n");
         this.player1 = new Human(player1Name);
         this.player2 = new Human(player2Name);
-        this.NUMBER_OF_DICE = askForDice();
-        this.playGame();
     }
 
     public DiceGame() {
         System.out.print("Starting new game with computer vs. computer\n");
         this.player1 = new Computer();
         this.player2 = new Computer();
-        this.NUMBER_OF_DICE = askForDice();
-        this.playGame();
     }
     /////////////////////////////////////////////////////////////////
 
     public void playGame() {
+        //Get and set number of dice
+        this.setNUMBER_OF_DICE(askForDice());
+
         //Initialise values used in method
         long startTime = System.currentTimeMillis();
         this.currentPlayerTurn = this.player1.name;
@@ -50,8 +43,8 @@ public class DiceGame extends Game{
         int player2Total = 0;
 
         //Initialise dice roll result arrays
-        this.player1Array = new int[this.NUMBER_OF_DICE];
-        this.player2Array = new int[this.NUMBER_OF_DICE];
+        this.player1Array = new int[this.getNUMBER_OF_DICE()];
+        this.player2Array = new int[this.getNUMBER_OF_DICE()];
 
         while(this.getWinner().equals("")) {
             this.printCurrentTurn();
@@ -134,7 +127,7 @@ public class DiceGame extends Game{
     public DiceGameScorecard generateScorecard() {
         String winnerType = this.getWinnerType();
 
-        return new DiceGameScorecard(this.getWinner(), winnerType, this.timeTaken, this.NUMBER_OF_DICE,
+        return new DiceGameScorecard(this.getWinner(), winnerType, this.timeTaken, this.getNUMBER_OF_DICE(),
                 this.getWinningScore());
     }
 
@@ -221,5 +214,13 @@ public class DiceGame extends Game{
 
     public void setWinningScore(int winningScore) {
         this.winningScore = winningScore;
+    }
+
+    public int getNUMBER_OF_DICE() {
+        return NUMBER_OF_DICE;
+    }
+
+    public void setNUMBER_OF_DICE(int NUMBER_OF_DICE) {
+        this.NUMBER_OF_DICE = NUMBER_OF_DICE;
     }
 }
