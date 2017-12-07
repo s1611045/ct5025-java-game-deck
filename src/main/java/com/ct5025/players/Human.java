@@ -3,6 +3,7 @@ package main.java.com.ct5025.players;
 public class Human extends Player {
     /**
      * Human is a subclass of Player, and represents a human player (i.e. a non-computer, user-controlled player)
+     * @param name  the name of the human player
      * @author Coskun Demir
      * @version 1.0
      */

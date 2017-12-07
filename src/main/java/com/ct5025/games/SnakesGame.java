@@ -55,7 +55,7 @@ public class SnakesGame extends Game {
     /////////////////////////////////////////////////////////////////
 
     /**
-     * playGame is the functional code that plays the snakes & ladders game.
+     * playGame is the functional code that plays the snakes and ladders game.
      */
     public void playGame() {
         //Create game board

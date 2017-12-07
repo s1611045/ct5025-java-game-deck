@@ -54,7 +54,7 @@ public class NoughtsGame extends Game {
     /////////////////////////////////////////////////////////////////
 
     /**
-     * playGame is the functional code that plays the noughts & crosses game.
+     * playGame is the functional code that plays the noughts and crosses game.
      */
     @SuppressWarnings("unused")
     public void playGame() {
