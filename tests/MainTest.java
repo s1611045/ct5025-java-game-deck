@@ -4,36 +4,6 @@ import main.java.com.ct5025.*;
 import static org.junit.Assert.*;
 
 public class MainTest {
-        /*@Test
-        public void getNames() throws Exception {
-            //Create class
-            Main mainTest = new Main();
-
-            //Generate test variables
-            int oneHumanPlayer = 1;
-            int twoHumanPlayers = 2;
-            int twoComputerPlayers = 3;
-
-            /////////////////////////////////////////////////////////////////////////////////
-            //TEST SUITES:
-            //
-            //
-            //Test that if one human player is selected, their name is returned and not nothing
-            assertNotNull(mainTest.getNames(oneHumanPlayer)[0], "First element in name array IS null -> should be not null.");
-            //Subsequently test that the value of next element in returned array IS null
-            assertNull(mainTest.getNames(oneHumanPlayer)[1], "Second element in name array IS not null -> should be null.");
-            //
-            //
-            //Test that if two human players are selected, both names are returned and not nothing
-            assertNotNull(mainTest.getNames(twoHumanPlayers)[0], "First element in name array IS null -> should be not null.");
-            assertNotNull(mainTest.getNames(twoHumanPlayers)[1], "Second element in name array IS null -> should be not null.");
-            //
-            //
-            //Test that if two computer players are selected, a null array is returned
-            assertNull(mainTest.getNames(twoComputerPlayers)[0], "First element in name IS NOT null -> should be null.");
-            /////////////////////////////////////////////////////////////////////////////////
-        }*/
-
         @Test
         public void validateName() {
             //Create class
