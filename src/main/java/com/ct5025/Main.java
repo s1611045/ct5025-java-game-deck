@@ -1,11 +1,3 @@
-/**
- * Main defines the first function and class instantiated by the JVM.
- * It contains the static function that is first executed, as well as code to instantiate and play the games in the deck.
- * The program closes upon static function code completion, i.e. when the user first inputs '5' in order to exit.
- *
- * @author Coskun Demir
- * @version 1.0
- */
 package main.java.com.ct5025;
 
 import main.java.com.ct5025.games.DiceGame;
@@ -16,6 +8,14 @@ import java.lang.*;
 import java.io.*;
 
 public class Main {
+    /**
+     * Main defines the first function and class instantiated by the JVM.
+     * It contains the static function that is first executed, as well as code to instantiate and play the games in the deck.
+     * The program closes upon static function code completion, i.e. when the user first inputs '5' in order to exit.
+     *
+     * @author Coskun Demir
+     * @version 1.0
+     */
     private int gameSelection = 0;
     private int playerSelection = 0;
     private int computerWins = 0;
@@ -23,7 +23,7 @@ public class Main {
 
     /**
      * main is the static function that the JVM runs automatically on program run.
-     * @param args
+     * @param args generic arguments
      */
     public static void main(String[] args) {
         int selection = 0;
@@ -32,76 +32,81 @@ public class Main {
             game.gameMenu();
 
             //Dice game selected
-            if (game.getGameSelection() == 1) {
-                game.playerMenu();
-                String[] names = game.getNames(game.playerSelection);
-                //Computer vs. computer
-                if (names[0].equals("")) {
-                    DiceGame diceGame = new DiceGame();
-                    diceGame.playGame();
+            switch (game.getGameSelection()) {
+                case 1: {
+                    game.playerMenu();
+                    String[] names = game.getNames(game.playerSelection);
+                    //Computer vs. computer
+                    if (names[0].equals("")) {
+                        DiceGame diceGame = new DiceGame();
+                        diceGame.playGame();
+                    }
+                    //Human vs. computer
+                    else if ((names[1].equals(""))) {
+                        DiceGame diceGame = new DiceGame(names[0]);
+                        diceGame.playGame();
+                    }
+                    //Human vs. human
+                    else {
+                        DiceGame diceGame = new DiceGame(names[0], names[1]);
+                        diceGame.playGame();
+                    }
+                    break;
                 }
-                //Human vs. computer
-                else if ((names[1].equals(""))) {
-                    DiceGame diceGame = new DiceGame(names[0]);
-                    diceGame.playGame();
-                }
-                //Human vs. human
-                else {
-                    DiceGame diceGame = new DiceGame(names[0], names[1]);
-                    diceGame.playGame();
-                }
-            }
 
-            //Noughts and crosses selected
-            else if (game.getGameSelection() == 2) {
-                game.playerMenu();
-                String[] names = game.getNames(game.playerSelection);
-                //Computer vs. computer
-                if (names[0].equals("")) {
-                    NoughtsGame noughtsGame = new NoughtsGame();
-                    noughtsGame.playGame();
+                //Noughts and crosses selected
+                case 2: {
+                    game.playerMenu();
+                    String[] names = game.getNames(game.playerSelection);
+                    //Computer vs. computer
+                    if (names[0].equals("")) {
+                        NoughtsGame noughtsGame = new NoughtsGame();
+                        noughtsGame.playGame();
+                    }
+                    //Human vs. computer
+                    else if ((names[1].equals(""))) {
+                        NoughtsGame noughtsGame = new NoughtsGame(names[0]);
+                        noughtsGame.playGame();
+                    }
+                    //Human vs. human
+                    else {
+                        NoughtsGame noughtsGame = new NoughtsGame(names[0], names[1]);
+                        noughtsGame.playGame();
+                    }
+                    break;
                 }
-                //Human vs. computer
-                else if ((names[1].equals(""))) {
-                    NoughtsGame noughtsGame = new NoughtsGame(names[0]);
-                    noughtsGame.playGame();
-                }
-                //Human vs. human
-                else {
-                    NoughtsGame noughtsGame = new NoughtsGame(names[0], names[1]);
-                    noughtsGame.playGame();
-                }
-            }
 
-            //Snakes and ladders selected
-            else if (game.getGameSelection() == 3) {
-                game.playerMenu();
-                String[] names = game.getNames(game.playerSelection);
-                //Computer vs. computer
-                if (names[0].equals("")) {
-                    SnakesGame snakesGame = new SnakesGame();
-                    snakesGame.playGame();
+                //Snakes and ladders selected
+                case 3: {
+                    game.playerMenu();
+                    String[] names = game.getNames(game.playerSelection);
+                    //Computer vs. computer
+                    if (names[0].equals("")) {
+                        SnakesGame snakesGame = new SnakesGame();
+                        snakesGame.playGame();
+                    }
+                    //Human vs. computer
+                    else if ((names[1].equals(""))) {
+                        SnakesGame snakesGame = new SnakesGame(names[0]);
+                        snakesGame.playGame();
+                    }
+                    //Human vs. human
+                    else {
+                        SnakesGame snakesGame = new SnakesGame(names[0], names[1]);
+                        snakesGame.playGame();
+                    }
+                    break;
                 }
-                //Human vs. computer
-                else if ((names[1].equals(""))) {
-                    SnakesGame snakesGame = new SnakesGame(names[0]);
-                    snakesGame.playGame();
-                }
-                //Human vs. human
-                else {
-                    SnakesGame snakesGame = new SnakesGame(names[0], names[1]);
-                    snakesGame.playGame();
-                }
-            }
 
-            //View game results elected
-            else if (game.getGameSelection() == 4) {
-                game.readScoreFile();
-            }
+                //View game results elected
+                case 4:
+                    game.readScoreFile();
+                    break;
 
-            //Exit game selected
-            else {
-                selection = 5;
+                //Exit game selected
+                default:
+                    selection = 5;
+                    break;
             }
         }
     }
@@ -110,44 +115,42 @@ public class Main {
      * getNames checks its input, recognising whether there are 1, 2, or 0 human players.
      * <p>
      * It then asks the user for the names of the respective human players.
-     * @param players
+     * @param players selection that determines how many human players there will be
      * @return  a string array containing the names of the human players
      */
-    public String[] getNames(int players) {
+    private String[] getNames(int players) {
         String input[] = new String[2];
         input[0] = "";
         boolean validName = false;
 
         //If human vs. human selected, ask for name only once
-        if(players == 1) {
-            while(!validName) {
-                System.out.print("\nEnter the name of the human player: ");
+        switch (players) {
+            case 1:
+                while (!validName) {
+                    System.out.print("\nEnter the name of the human player: ");
+                    java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+                    input[0] = scanner.next();
+                    input[1] = "";
+                    if (this.validateName(input)) {
+                        validName = true;
+                    } else {
+                        System.out.print("\nThat name is not allowed! Try again.\n");
+                    }
+                }
+                return input;
+            case 2:
+                System.out.print("\nEnter the name of the first human player: ");
                 java.util.Scanner scanner = new java.util.Scanner(System.in);
 
                 input[0] = scanner.next();
-                input[1] = "";
-                if (this.validateName(input)) {
-                    validName = true;
-                }
-                else {
-                    System.out.print("\nThat name is not allowed! Try again.\n");
-                }
-            }
-            return input;
-        }
-        else if(players == 2) {
-            System.out.print("\nEnter the name of the first human player: ");
-            java.util.Scanner scanner = new java.util.Scanner(System.in);
 
-            input[0] = scanner.next();
+                System.out.print("\nEnter the name of the second human player: ");
+                input[1] = scanner.next();
 
-            System.out.print("\nEnter the name of the second human player: ");
-            input[1] = scanner.next();
-
-            return input;
-        }
-        else {
-            return input;
+                return input;
+            default:
+                return input;
         }
     }
 
@@ -157,7 +160,7 @@ public class Main {
      * <p>
      * The users' selection, upon being validated, is then assigned to main.playerSelection.
      */
-    public void playerMenu() {
+    private void playerMenu() {
         while(this.getPlayerSelection()==0) {
             //Print menu
             System.out.print("\n\nSelect players:");
@@ -185,7 +188,7 @@ public class Main {
      * gameMenu prints a menu screen to the user asking them which game they would like to play,
      * or if they would like to exit the program.
      */
-    public void gameMenu() {
+    private void gameMenu() {
         while(this.getGameSelection()==0) {
             //Print game menu
             System.out.print("\nWelcome to CT5025 Java Game Deck.");
@@ -222,7 +225,7 @@ public class Main {
      * Finally, the function outputs a statistic stating how many of those 10 games humans had won,
      * and how many games computers had won.
      */
-    public void readScoreFile() {
+    private void readScoreFile() {
         if(checkFileExists()) {
             File file = new File("scores.txt");
             int fileLength = 0;
@@ -262,7 +265,7 @@ public class Main {
                     }
                     reader.close();
                 }
-                System.out.print("Humans have won " + this.humanWins + " games and computers have won " + this.computerWins
+                System.out.print("\nHumans have won " + this.humanWins + " games and computers have won " + this.computerWins
                 + " games.\n\n");
             }
             catch (FileNotFoundException e) {
@@ -293,38 +296,40 @@ public class Main {
     private void printStatistic(String[] line, int game) {
         System.out.print("\n\nGame #" + game);
         for (int i=0;i<line.length;i++) {
-            if (i == 0) {
-                System.out.print("\n    Game name: " + line[i]);
-            }
-            else if (i == 1) {
-                System.out.print("\n    Winner: " + line[i]);
-            }
-            else if (i == 2) {
-                //Add human win to counter if human was the winner
-                if (line[i].equals("Human")) {
-                    this.humanWins++;
-                }
-                //Otherwise add computer win to counter
-                else {
-                    this.computerWins++;
-                }
-                //Print winner type regardless
-                System.out.print("\n    Winner type: " + line[i]);
-            }
-            else if (i == 3) {
-                System.out.print("\n    Time taken (seconds): " + line[i]);
-            }
-            else if (i == 4) {
-                System.out.print("\n    Number of dice/number of turns taken: " + line[i]);
-            }
-            else if (i == 5) {
-                System.out.print("\n    Final score/winning symbol: " + line[i]);
-            }
-            else if (i == 6) {
-                System.out.print("\n    Ladders climbed: " + line[i]);
-            }
-            else {
-                System.out.print("\n    Snakes fallen: " + line[i]);
+            switch (i) {
+                case 0:
+                    System.out.print("\n    Game name: " + line[i]);
+                    break;
+                case 1:
+                    System.out.print("\n    Winner: " + line[i]);
+                    break;
+                case 2:
+                    //Add human win to counter if human was the winner
+                    if (line[i].equals("Human")) {
+                        this.humanWins++;
+                    }
+                    //Otherwise add computer win to counter
+                    else {
+                        this.computerWins++;
+                    }
+                    //Print winner type regardless
+                    System.out.print("\n    Winner type: " + line[i]);
+                    break;
+                case 3:
+                    System.out.print("\n    Time taken (seconds): " + line[i]);
+                    break;
+                case 4:
+                    System.out.print("\n    Number of dice/number of turns taken: " + line[i]);
+                    break;
+                case 5:
+                    System.out.print("\n    Final score/winning symbol: " + line[i]);
+                    break;
+                case 6:
+                    System.out.print("\n    Ladders climbed: " + line[i]);
+                    break;
+                default:
+                    System.out.print("\n    Snakes fallen: " + line[i]);
+                    break;
             }
         }
         System.out.print("\n");
@@ -336,12 +341,7 @@ public class Main {
      */
     private boolean checkFileExists() {
         File scoreFile = new File("scores.txt");
-        if (scoreFile.exists()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return scoreFile.exists();
     }
 
     /**
@@ -350,27 +350,22 @@ public class Main {
      * @return  true if neither element in the input array are not "Draw"
      */
     public boolean validateName(String[] input) {
-        if (!(input[0].equals("Draw")) && !(input[1].equals("Draw"))) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return !(input[0].equals("Draw")) && !(input[1].equals("Draw"));
     }
 
-    public int getGameSelection() {
+    private int getGameSelection() {
         return gameSelection;
     }
 
-    public void setGameSelection(int gameSelection) {
+    private void setGameSelection(int gameSelection) {
         this.gameSelection = gameSelection;
     }
 
-    public int getPlayerSelection() {
+    private int getPlayerSelection() {
         return playerSelection;
     }
 
-    public void setPlayerSelection(int playerSelection) {
+    private void setPlayerSelection(int playerSelection) {
         this.playerSelection = playerSelection;
     }
 }

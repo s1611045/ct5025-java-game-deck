@@ -1,18 +1,19 @@
-/**
- * SnakesGame is an extension of Game, and represents the functional code that plays the Noughts & Crosses Game in the game deck.
- * @author Coskun Demir
- * @version 1.0
- */
 package main.java.com.ct5025.games;
+
 import main.java.com.ct5025.players.Computer;
 import main.java.com.ct5025.players.Human;
 import main.java.com.ct5025.scorecards.SnakesGameScorecard;
 
 public class SnakesGame extends Game {
+    /**
+     * SnakesGame is an extension of Game, and represents the functional code that plays the Noughts & Crosses Game in the game deck.
+     * @author Coskun Demir
+     * @version 1.0
+     */
     private int[][] gameBoard = new int[10][10];
-    private char player1Symbol = 'o';
+    private final char player1Symbol = 'o';
     private int player1Position = 1;
-    private char player2Symbol = 'x';
+    private final char player2Symbol = 'x';
     private int player2Position = 1;
     private String currentPlayerTurn = "";
     private String winner = "";
@@ -162,11 +163,11 @@ public class SnakesGame extends Game {
      * Generates an array with random numbers determining where 'ladders' will lie on the game board.
      * @return  an array with 5 random numbers between 0 and 89
      */
-    public int[] allocateLadders() {
+    private int[] allocateLadders() {
         //Generate local variables used
         int[] array = new int[5];
         java.util.Random rnd = new java.util.Random();
-        int number = 0;
+        int number;
 
         //Generate number
         for(int i=0;i<array.length;i++) {
@@ -181,7 +182,7 @@ public class SnakesGame extends Game {
      * Generates an array with random numbers determining where 'snakes' will lie on the game board.
      * @return  an array with 5 random numbers between 10 and 99
      */
-    public int[] allocateSnakes() {
+    private int[] allocateSnakes() {
         //Generate local variables used
         int[] array = new int[5];
         java.util.Random rnd = new java.util.Random();
@@ -192,12 +193,7 @@ public class SnakesGame extends Game {
         for(int i=0;i<array.length;i++) {
             while(!isValidNumber) {
                 number = rnd.nextInt(99);
-                if (number < 10) {
-                    isValidNumber = false;
-                }
-                else {
-                    isValidNumber = true;
-                }
+                isValidNumber = number >= 10;
             }
             array[i] = number;
         }
@@ -210,20 +206,15 @@ public class SnakesGame extends Game {
      * @param position  the current position of the respective player
      * @return  true if the position of the player is 100 or more
      */
-    protected boolean checkWinner(int position) {
-        if (position >= 100) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    boolean checkWinner(int position) {
+        return position >= 100;
     }
 
     /**
      * Determines whether the winner of the game is a human, computer player, or neither.
      * @return  a string containing "Human", "Computer" or "None" depending on the winner of the game
      */
-    public String getWinnerType() {
+    private String getWinnerType() {
         if (this.getWinner().equals("Draw")) {
             return "None";
         }
@@ -244,7 +235,7 @@ public class SnakesGame extends Game {
     /**
      * Finds the name assigned to currentPlayerTurn and swaps it with the opposite name.
      */
-    public void changeCurrentPlayerTurn() {
+    private void changeCurrentPlayerTurn() {
         if (this.currentPlayerTurn.equals(player1.name)) {
             this.currentPlayerTurn = player2.name;
         }
@@ -261,7 +252,7 @@ public class SnakesGame extends Game {
      * @param ladders   the integer array containing the positions of the ladders
      * @return  the new position of the respective player
      */
-    public int makeMove(int position, int[] snakes, int[] ladders) {
+    private int makeMove(int position, int[] snakes, int[] ladders) {
         int roll = dieRoll();
         position = position + roll;
         System.out.print("\nYou rolled a " + roll);
@@ -288,8 +279,8 @@ public class SnakesGame extends Game {
      * @return  true if the position and any element in the array matches
      */
     public boolean checkSnakeOrLadder(int position, int[] array) {
-        for(int i=0;i<array.length;i++) {
-            if (position == array[i]) {
+        for (int anArray : array) {
+            if (position == anArray) {
                 return true;
             }
         }
@@ -299,7 +290,7 @@ public class SnakesGame extends Game {
     /**
      * Prints the game board in a readable format to the user.
      */
-    public void printGameBoard() {
+    private void printGameBoard() {
         System.out.print("\n");
         for (int i=9;i>=0;i--) {
             for (int e=9;e>=0;e--) {
@@ -336,7 +327,7 @@ public class SnakesGame extends Game {
      * Generates a random number between 0 and 6, simulating a die roll.
      * @return  a randomly generated integer between 0 and 6
      */
-    public int dieRoll() {
+    private int dieRoll() {
         //Generate random number
         java.util.Random rnd = new java.util.Random();
         return rnd.nextInt(6);
@@ -347,7 +338,7 @@ public class SnakesGame extends Game {
      * @param board the empty array of the game board, initialised with the class
      * @return  the new game board, with enumerated values in each element
      */
-    public int[][] initialiseGameBoard(int[][] board) {
+    private int[][] initialiseGameBoard(int[][] board) {
         int ten = 0;
         int unit = 1;
         //Add appropriate values to board
@@ -373,11 +364,11 @@ public class SnakesGame extends Game {
     }
 
     //Encapsulate fields
-    public String getWinner() {
+    private String getWinner() {
         return winner;
     }
 
-    public void setWinner(String winner) {
+    private void setWinner(String winner) {
         this.winner = winner;
     }
 }

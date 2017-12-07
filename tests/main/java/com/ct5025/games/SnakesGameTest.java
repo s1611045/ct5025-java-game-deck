@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class SnakesGameTest {
     //Instantiate game object
-    SnakesGame game = new SnakesGame();
+    private final SnakesGame game = new SnakesGame();
 
     @Test
     public void checkWinner() {

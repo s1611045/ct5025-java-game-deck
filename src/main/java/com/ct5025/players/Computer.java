@@ -1,13 +1,13 @@
-/**
- * Computer is a subclass of Player, and represents a computer player (i.e. a non-human player).
- * @author Coskun Demir
- * @version 1.0
- */
 package main.java.com.ct5025.players;
 
 import java.util.ArrayList;
 
 public class Computer extends Player {
+    /**
+     * Computer is a subclass of Player, and represents a computer player (i.e. a non-human player).
+     * @author Coskun Demir
+     * @version 1.0
+     */
     //Set name for computer player, assigned randomly
     public Computer() {
         this.name = generateName();
@@ -46,8 +46,4 @@ public class Computer extends Player {
         return nameList.get(selector);
     }
 
-    //Encapsulate name field
-    public String getName() {
-        return this.name;
-    }
 }

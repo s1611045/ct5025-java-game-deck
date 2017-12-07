@@ -4,7 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class NoughtsGameTest {
-    private NoughtsGame noughtsGame = new NoughtsGame();
+    private final NoughtsGame noughtsGame = new NoughtsGame();
 
     @Test
     public void checkSquareContainsSymbol() {

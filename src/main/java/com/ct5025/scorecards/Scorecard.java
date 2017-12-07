@@ -1,16 +1,16 @@
-/**
- * Scorecard is the abstract class containing attributes common to the scorecard objects used in the game deck.
- * @author Coskun Demir
- * @version 1.0
- * @see main.java.com.ct5025.scorecards.DiceGameScorecard
- * @see main.java.com.ct5025.scorecards.NoughtsGameScorecard
- * @see main.java.com.ct5025.scorecards.SnakesGameScorecard
- */
 package main.java.com.ct5025.scorecards;
 
 import java.io.*;
 
-public abstract class Scorecard {
+abstract class Scorecard {
+    /**
+     * Scorecard is the abstract class containing attributes common to the scorecard objects used in the game deck.
+     * @author Coskun Demir
+     * @version 1.0
+     * @see main.java.com.ct5025.scorecards.DiceGameScorecard
+     * @see main.java.com.ct5025.scorecards.NoughtsGameScorecard
+     * @see main.java.com.ct5025.scorecards.SnakesGameScorecard
+     */
     private String winner;
     private String winnerType;
     private long timeTaken;
@@ -46,37 +46,32 @@ public abstract class Scorecard {
      * Checks whether 'scores.txt' is a file that exists
      * @return true if 'scores.txt' exists
      */
-    protected boolean checkFileExists() {
+    boolean checkFileExists() {
         File scoreFile = new File("scores.txt");
-        if (scoreFile.exists()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return scoreFile.exists();
     }
 
-    public String getWinner() {
+    String getWinner() {
         return winner;
     }
 
-    public void setWinner(String winner) {
+    void setWinner(String winner) {
         this.winner = winner;
     }
 
-    public long getTimeTaken() {
+    long getTimeTaken() {
         return timeTaken;
     }
 
-    public void setTimeTaken(long timeTaken) {
+    void setTimeTaken(long timeTaken) {
         this.timeTaken = timeTaken;
     }
 
-    public String getWinnerType() {
+    String getWinnerType() {
         return winnerType;
     }
 
-    public void setWinnerType(String winnerType) {
+    void setWinnerType(String winnerType) {
         this.winnerType = winnerType;
     }
 }

@@ -9,7 +9,7 @@ public class ScorecardTest {
     //Instantiate a non-abstract scorecard object that is a subclass of 'Scorecard'
     //It is not important which class it is, as the method that is being tested is
     //contained within 'Scorecard'.
-    private DiceGameScorecard scorecard = new DiceGameScorecard("genericWinner", "genericWinnerType", 0, 0, 0);
+    private final DiceGameScorecard scorecard = new DiceGameScorecard("genericWinner", "genericWinnerType", 0, 0, 0);
 
     @Test
     public void checkFileExists() {

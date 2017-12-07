@@ -35,7 +35,7 @@ public class MainTest {
         }*/
 
         @Test
-        public void validateName() throws Exception {
+        public void validateName() {
             //Create class
             Main mainTest = new Main();
 
