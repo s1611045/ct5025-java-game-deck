@@ -215,11 +215,11 @@ public class NoughtsGame extends Game {
     }
 
 
-    private void addSymbolToBoard(int row, int column, char symbol) {
+    public void addSymbolToBoard(int row, int column, char symbol) {
         this.gameBoard[row][column] = symbol;
     }
 
-    private boolean checkSquareContainsSymbol(int row, int column) {
+    protected boolean checkSquareContainsSymbol(int row, int column) {
         if ((this.gameBoard[row][column] == 'o') || (this.gameBoard[row][column] == 'x')) {
             return true;
         }
@@ -274,7 +274,7 @@ public class NoughtsGame extends Game {
         }
     }
 
-    private boolean checkColumns() {
+    protected boolean checkColumns() {
         //Check columns of board for winner
         for (int i=0;i<BOARD_DIMENSION;i++) {
             if (((this.gameBoard[0][i] == 'o') && (this.gameBoard[1][i] == 'o') && (this.gameBoard[2][i] == 'o')) ||
@@ -285,7 +285,7 @@ public class NoughtsGame extends Game {
         return false;
     }
 
-    private boolean checkRows() {
+    protected boolean checkRows() {
         //Check rows of the board for winner
         for (int i=0;i<BOARD_DIMENSION;i++) {
             if (((this.gameBoard[i][0] == 'o') && (this.gameBoard[i][1] == 'o') && (this.gameBoard[i][2] == 'o')) ||
@@ -296,7 +296,7 @@ public class NoughtsGame extends Game {
         return false;
     }
 
-    private boolean checkDiags() {
+    protected boolean checkDiags() {
         //Check diagonals of board for winner
         if (((this.gameBoard[0][0] == 'o') && (this.gameBoard[1][1] == 'o') && (this.gameBoard[2][2] == 'o')) ||
                 ((this.gameBoard[0][2] == 'o') && (this.gameBoard[1][1] == 'o') && (this.gameBoard[2][0] == 'o'))) {
@@ -306,7 +306,7 @@ public class NoughtsGame extends Game {
                 ((this.gameBoard[0][2] == 'x') && (this.gameBoard[1][1] == 'x') && (this.gameBoard[2][0] == 'x'));
     }
 
-    private boolean checkWinner() {
+    protected boolean checkWinner() {
         return (this.checkRows() || this.checkColumns() || this.checkDiags());
     }
 
