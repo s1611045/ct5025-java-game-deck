@@ -1,3 +1,11 @@
+/**
+ * Main defines the first function and class instantiated by the JVM.
+ * It contains the static function that is first executed, as well as code to instantiate and play the games in the deck.
+ * The program closes upon static function code completion, i.e. when the user first inputs '5' in order to exit.
+ *
+ * @author Coskun Demir
+ * @version 1.0
+ */
 package main.java.com.ct5025;
 
 import main.java.com.ct5025.games.DiceGame;
@@ -13,6 +21,10 @@ public class Main {
     private int computerWins = 0;
     private int humanWins = 0;
 
+    /**
+     * main is the static function that the JVM runs automatically on program run.
+     * @param args
+     */
     public static void main(String[] args) {
         int selection = 0;
         while (!(selection == 5)) {
@@ -93,7 +105,14 @@ public class Main {
             }
         }
     }
-    
+
+    /**
+     * getNames checks its input, recognising whether there are 1, 2, or 0 human players.
+     * <p>
+     * It then asks the user for the names of the respective human players.
+     * @param players
+     * @return  a string array containing the names of the human players
+     */
     public String[] getNames(int players) {
         String input[] = new String[2];
         input[0] = "";
@@ -132,6 +151,12 @@ public class Main {
         }
     }
 
+    /**
+     * playerMenu prints a menu screen to the user asking them whether they would like to play with
+     * one human player, two human players, or no human players.
+     * <p>
+     * The users' selection, upon being validated, is then assigned to main.playerSelection.
+     */
     public void playerMenu() {
         while(this.getPlayerSelection()==0) {
             //Print menu
@@ -156,6 +181,10 @@ public class Main {
         }
     }
 
+    /**
+     * gameMenu prints a menu screen to the user asking them which game they would like to play,
+     * or if they would like to exit the program.
+     */
     public void gameMenu() {
         while(this.getGameSelection()==0) {
             //Print game menu
@@ -184,6 +213,15 @@ public class Main {
         }
     }
 
+    /**
+     * readScoreFile opens the 'scores.txt' file, navigates to the final 10 entries of the file, parses the
+     * received string, and runs printStatistic to display them to the user.
+     * <p>
+     * If there are 10 or less entries in the file, all lines are received and displayed to the user.
+     * <p>
+     * Finally, the function outputs a statistic stating how many of those 10 games humans had won,
+     * and how many games computers had won.
+     */
     public void readScoreFile() {
         if(checkFileExists()) {
             File file = new File("scores.txt");
@@ -246,6 +284,12 @@ public class Main {
         String blank = scanner.nextLine();
     }
 
+    /**
+     * printStatistic parses elements of the input string array, and prints the respective values to the user,
+     * with their names and meanings.
+     * @param line  the array containing the elements to parse
+     * @param game  the game number (out of 10) to display to the user
+     */
     private void printStatistic(String[] line, int game) {
         System.out.print("\n\nGame #" + game);
         for (int i=0;i<line.length;i++) {
@@ -286,6 +330,10 @@ public class Main {
         System.out.print("\n");
     }
 
+    /**
+     * checkFileExists checks whether the 'scores.txt' file exists.
+     * @return  true if 'scores.txt' exists
+     */
     private boolean checkFileExists() {
         File scoreFile = new File("scores.txt");
         if (scoreFile.exists()) {
@@ -296,6 +344,11 @@ public class Main {
         }
     }
 
+    /**
+     * validateName ensures that the human names input by the user are  not "Draw".
+     * @param input string array containing human names input by the user
+     * @return  true if neither element in the input array are not "Draw"
+     */
     public boolean validateName(String[] input) {
         if (!(input[0].equals("Draw")) && !(input[1].equals("Draw"))) {
             return true;

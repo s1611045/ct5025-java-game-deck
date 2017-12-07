@@ -1,3 +1,8 @@
+/**
+ * DiceGame is an extension of Game, and represents the functional code that plays the Dice Game in the game deck.
+ * @author Coskun Demir
+ * @version 1.0
+ */
 package main.java.com.ct5025.games;
 import main.java.com.ct5025.players.Computer;
 import main.java.com.ct5025.players.Human;
@@ -13,18 +18,31 @@ public class DiceGame extends Game{
     private int winningScore;
 
     //Instantiate player instances polymorphously based on user input
+
+    /**
+     * A constructor method creating a new human player object and a new computer player object
+     * @param playerName    the name of the human player passed from Main when instantiated
+     */
     public DiceGame(String playerName) {
         System.out.print("Starting new game with human vs. computer\n");
         this.player1 = new Human(playerName);
         this.player2 = new Computer();
     }
 
+    /**
+     * A constructor method creating two new human player objects
+     * @param player1Name   the name of one human player passed from Main when instantiated
+     * @param player2Name   the name of the second human player passed from Main when instantiated
+     */
     public DiceGame(String player1Name, String player2Name) {
         System.out.print("Starting new game with human vs. human\n");
         this.player1 = new Human(player1Name);
         this.player2 = new Human(player2Name);
     }
 
+    /**
+     * A constructor method creating two computer player objects
+     */
     public DiceGame() {
         System.out.print("Starting new game with computer vs. computer\n");
         this.player1 = new Computer();
@@ -32,6 +50,9 @@ public class DiceGame extends Game{
     }
     /////////////////////////////////////////////////////////////////
 
+    /**
+     * playGame is the functional code that plays the dice game.
+     */
     public void playGame() {
         //Get and set number of dice
         this.setNUMBER_OF_DICE(askForDice());
@@ -124,6 +145,10 @@ public class DiceGame extends Game{
         String blank = scanner.nextLine();
     }
 
+    /**
+     * generateScorecard creates a new DiceGameScorecard object and passes the statistics from the duration of the game.
+     * @return  a new DiceGameScorecard object with appropriate game statistics
+     */
     public DiceGameScorecard generateScorecard() {
         String winnerType = this.getWinnerType();
 
@@ -131,6 +156,10 @@ public class DiceGame extends Game{
                 this.getWinningScore());
     }
 
+    /**
+     * getWinnerType checks the winner and object type of the winner to determine if the winner was a human, computer, or netiher.
+     * @return  a string containing the type of winner of the game
+     */
     public String getWinnerType() {
         if (this.getWinner().equals("Draw")) {
             return "None";
@@ -149,10 +178,18 @@ public class DiceGame extends Game{
         }
     }
 
+    /**
+     * printCurrentTurn checks the currentPlayerTurn attribute and prints to the user who's turn it is.
+     */
     public void printCurrentTurn() {
         System.out.print("\nIt is " + this.currentPlayerTurn + "'s turn.\n");
     }
 
+    /**
+     * printRollResult checks the values of each die roll passed to the function and prints it to the user, alongside the player that rolled the dice.
+     * @param playerArray   an array containing each die roll result from a player
+     * @param player    the name of the player that rolled the dice
+     */
     public void printRollResult(int[] playerArray, String player) {
         System.out.print("\n");
         for (int aPlayerArray : playerArray) {
@@ -161,12 +198,21 @@ public class DiceGame extends Game{
         System.out.print("\n");
     }
 
+    /**
+     * printTotals prints the total combined value of each die roll of each player.
+     * @param player1Total  the total value of the dice roll result scored by player 1
+     * @param player2Total  the total value of the dice roll result scored by player 2
+     */
     public void printTotals(int player1Total, int player2Total) {
         System.out.print("\n");
         System.out.print(this.player1.name + " scored " + player1Total + " overall.\n");
         System.out.print(this.player2.name + " scored " + player2Total + " overall.\n");
     }
 
+    /**
+     * askForDice asks the user how many dice they wish to use in the game instance.
+     * @return  integer containing the number of dice the players wish to use in the game
+     */
     public int askForDice() {
         boolean validInput = false;
         String inputString = "";
@@ -191,6 +237,11 @@ public class DiceGame extends Game{
         return Character.getNumericValue(inputString.charAt(0));
     }
 
+    /**
+     * dieRoll generates a random number between 0 and 6 for the number of dice the user has selected.
+     * @param playerArray   the array of die roll values corresponding to the player
+     * @return  the array with newly written-to values
+     */
     public int[] dieRoll(int[] playerArray) {
         //Generate and return random number from 1-6
         java.util.Random rnd = new java.util.Random();

@@ -1,3 +1,11 @@
+/**
+ * Scorecard is the abstract class containing attributes common to the scorecard objects used in the game deck.
+ * @author Coskun Demir
+ * @version 1.0
+ * @see main.java.com.ct5025.scorecards.DiceGameScorecard
+ * @see main.java.com.ct5025.scorecards.NoughtsGameScorecard
+ * @see main.java.com.ct5025.scorecards.SnakesGameScorecard
+ */
 package main.java.com.ct5025.scorecards;
 
 import java.io.*;
@@ -34,6 +42,10 @@ public abstract class Scorecard {
         }
     }
 
+    /**
+     * Checks whether 'scores.txt' is a file that exists
+     * @return true if 'scores.txt' exists
+     */
     protected boolean checkFileExists() {
         File scoreFile = new File("scores.txt");
         if (scoreFile.exists()) {

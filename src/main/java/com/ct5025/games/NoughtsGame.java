@@ -1,3 +1,8 @@
+/**
+ * NoughtsGame is an extension of Game, and represents the functional code that plays the Noughts & Crosses Game in the game deck.
+ * @author Coskun Demir
+ * @version 1.0
+ */
 package main.java.com.ct5025.games;
 import main.java.com.ct5025.players.Computer;
 import main.java.com.ct5025.players.Human;
@@ -14,18 +19,31 @@ public class NoughtsGame extends Game {
     private int gameCounter = 0;
 
     //Instantiate player instances polymorphously based on user input
+
+    /**
+     * A constructor method creating a new human player object and a new computer player object
+     * @param playerName    the name of the human player passed from Main when instantiated
+     */
     public NoughtsGame(String playerName) {
         System.out.print("Starting new game with human vs. computer\n");
         this.player1 = new Human(playerName);
         this.player2 = new Computer();
     }
 
+    /**
+     * A constructor method creating two new human player objects
+     * @param player1Name   the name of one human player passed from Main when instantiated
+     * @param player2Name   the name of the second human player passed from Main when instantiated
+     */
     public NoughtsGame(String player1Name, String player2Name) {
         System.out.print("Starting new game with human vs. human\n");
         this.player1 = new Human(player1Name);
         this.player2 = new Human(player2Name);
     }
 
+    /**
+     * A constructor method creating two computer player objects
+     */
     public NoughtsGame() {
         System.out.print("Starting new game with computer vs. computer\n");
         this.player1 = new Computer();
@@ -33,6 +51,9 @@ public class NoughtsGame extends Game {
     }
     /////////////////////////////////////////////////////////////////
 
+    /**
+     * playGame is the functional code that plays the noughts & crosses game.
+     */
     public void playGame() {
         long startTime = System.currentTimeMillis();
         while(this.getWinner() == "") {
@@ -136,6 +157,9 @@ public class NoughtsGame extends Game {
         String blank = scanner.nextLine();
     }
 
+    /**
+     * humanMove asks a human player for the co-ordinates at which they would like to place their symbol onto the board.
+     */
     private void humanMove() {
         boolean moveMade = false;
         int[] move;
@@ -152,6 +176,10 @@ public class NoughtsGame extends Game {
         }
     }
 
+    /**
+     * getWinnerType determines if the winner of the game was a human player, computer player, or neither.
+     * @return  a string containing the type of winner of the game
+     */
     public String getWinnerType() {
         if (this.getWinner().equals("Draw")) {
             return "None";
@@ -170,6 +198,10 @@ public class NoughtsGame extends Game {
         }
     }
 
+    /**
+     * Asks the user for the co-ordinates at which they would like to place their symbol onto the board, and returns it to humanMove.
+     * @return  an array containing the row and column at which the user would like to place their symbol
+     */
     private int[] getCoordinates() {
         boolean isValidInput = false;
         int row = 0;
@@ -212,6 +244,12 @@ public class NoughtsGame extends Game {
     }
 
 
+    /**
+     * Adds the symbol of the given character to the board at the specified position.
+     * @param row   the row in which the symbol will be placed
+     * @param column    the column in which the symbol will be placed
+     * @param symbol    the symbol character to be placed
+     */
     public void addSymbolToBoard(int row, int column, char symbol) {
         this.gameBoard[row][column] = symbol;
     }
@@ -225,6 +263,9 @@ public class NoughtsGame extends Game {
         }
     }
 
+    /**
+     * Changes the symbol of the current player from 'o' to 'x' and vice-versa depending on the current player's symbol.
+     */
     private void changeCurrentPlayer() {
         if (this.currentPlayerSymbol == 'o') {
             this.currentPlayerSymbol = 'x';
@@ -234,6 +275,9 @@ public class NoughtsGame extends Game {
         }
     }
 
+    /**
+     * Displays the game board to the user in a visual, formatted way.
+     */
     private void printGameBoard() {
         //Print numbers identifying board columns
         System.out.print("  1  2  3\n");
@@ -258,6 +302,11 @@ public class NoughtsGame extends Game {
         }
     }
 
+    /**
+     * A computer player randomly generates the position at which they will place their symbol on to the board,
+     * checks that the symbol does not already exist at the position and once it finds a free position,
+     * places the symbol.
+     */
     private void computerMove() {
         boolean moveMade = false;
         java.util.Random rand = new java.util.Random();
@@ -271,6 +320,10 @@ public class NoughtsGame extends Game {
         }
     }
 
+    /**
+     * Checks the columns of the board for a winner.
+     * @return  a boolean value determining whether there were three of the same symbol in any column
+     */
     protected boolean checkColumns() {
         //Check columns of board for winner
         for (int i=0;i<BOARD_DIMENSION;i++) {
@@ -282,6 +335,10 @@ public class NoughtsGame extends Game {
         return false;
     }
 
+    /**
+     * Checks the rows of the board for a winner.
+     * @return  a boolean value determining whether there were three of the same symbol in any row
+     */
     protected boolean checkRows() {
         //Check rows of the board for winner
         for (int i=0;i<BOARD_DIMENSION;i++) {
@@ -293,6 +350,10 @@ public class NoughtsGame extends Game {
         return false;
     }
 
+    /**
+     * Checks the diagonals of the board for a winner.
+     * @return a boolean value determining whether there were three of the same symbol in any diagonal direction
+     */
     protected boolean checkDiags() {
         //Check diagonals of board for winner
         if (((this.gameBoard[0][0] == 'o') && (this.gameBoard[1][1] == 'o') && (this.gameBoard[2][2] == 'o')) ||
@@ -303,6 +364,10 @@ public class NoughtsGame extends Game {
                 ((this.gameBoard[0][2] == 'x') && (this.gameBoard[1][1] == 'x') && (this.gameBoard[2][0] == 'x'));
     }
 
+    /**
+     * Checks if checkRow, checkColumn, or checkDiags has returned true, i.e. there is a winner.
+     * @return  a boolean value determining if a winner has been found
+     */
     protected boolean checkWinner() {
         return (this.checkRows() || this.checkColumns() || this.checkDiags());
     }

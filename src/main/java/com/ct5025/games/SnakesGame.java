@@ -1,3 +1,8 @@
+/**
+ * SnakesGame is an extension of Game, and represents the functional code that plays the Noughts & Crosses Game in the game deck.
+ * @author Coskun Demir
+ * @version 1.0
+ */
 package main.java.com.ct5025.games;
 import main.java.com.ct5025.players.Computer;
 import main.java.com.ct5025.players.Human;
@@ -16,18 +21,31 @@ public class SnakesGame extends Game {
     private int winningScore;
 
     //Instantiate player instances polymorphously based on user input
+
+    /**
+     * A constructor method creating a new human player object and a new computer player object
+     * @param playerName    the name of the human player passed from Main when instantiated
+     */
     public SnakesGame(String playerName) {
         System.out.print("Starting new game with human vs. computer\n");
         this.player1 = new Human(playerName);
         this.player2 = new Computer();
     }
 
+    /**
+     * A constructor method creating two new human player objects
+     * @param player1Name   the name of one human player passed from Main when instantiated
+     * @param player2Name   the name of the second human player passed from Main when instantiated
+     */
     public SnakesGame(String player1Name, String player2Name) {
         System.out.print("Starting new game with human vs. human\n");
         this.player1 = new Human(player1Name);
         this.player2 = new Human(player2Name);
     }
 
+    /**
+     * A constructor method creating two computer player objects
+     */
     public SnakesGame() {
         System.out.print("Starting new game with computer vs. computer\n");
         this.player1 = new Computer();
@@ -35,6 +53,9 @@ public class SnakesGame extends Game {
     }
     /////////////////////////////////////////////////////////////////
 
+    /**
+     * playGame is the functional code that plays the snakes & ladders game.
+     */
     public void playGame() {
         //Create game board
         this.gameBoard = this.initialiseGameBoard(this.gameBoard);
@@ -137,6 +158,10 @@ public class SnakesGame extends Game {
         String blank = scanner.nextLine();
     }
 
+    /**
+     * Generates an array with random numbers determining where 'ladders' will lie on the game board.
+     * @return  an array with 5 random numbers between 0 and 89
+     */
     public int[] allocateLadders() {
         //Generate local variables used
         int[] array = new int[5];
@@ -152,6 +177,10 @@ public class SnakesGame extends Game {
         return array;
     }
 
+    /**
+     * Generates an array with random numbers determining where 'snakes' will lie on the game board.
+     * @return  an array with 5 random numbers between 10 and 99
+     */
     public int[] allocateSnakes() {
         //Generate local variables used
         int[] array = new int[5];
@@ -176,6 +205,11 @@ public class SnakesGame extends Game {
         return array;
     }
 
+    /**
+     * Checks the position of a player to determine if they have won the game.
+     * @param position  the current position of the respective player
+     * @return  true if the position of the player is 100 or more
+     */
     protected boolean checkWinner(int position) {
         if (position >= 100) {
             return true;
@@ -185,6 +219,10 @@ public class SnakesGame extends Game {
         }
     }
 
+    /**
+     * Determines whether the winner of the game is a human, computer player, or neither.
+     * @return  a string containing "Human", "Computer" or "None" depending on the winner of the game
+     */
     public String getWinnerType() {
         if (this.getWinner().equals("Draw")) {
             return "None";
@@ -203,6 +241,9 @@ public class SnakesGame extends Game {
         }
     }
 
+    /**
+     * Finds the name assigned to currentPlayerTurn and swaps it with the opposite name.
+     */
     public void changeCurrentPlayerTurn() {
         if (this.currentPlayerTurn.equals(player1.name)) {
             this.currentPlayerTurn = player2.name;
@@ -212,6 +253,14 @@ public class SnakesGame extends Game {
         }
     }
 
+    /**
+     * The function that adjusts the player position based on the result of their dice roll,
+     * and whether or not they landed on a snake or a ladder.
+     * @param position  the current position of the respective player
+     * @param snakes    the integer array containing the positions of the snakes
+     * @param ladders   the integer array containing the positions of the ladders
+     * @return  the new position of the respective player
+     */
     public int makeMove(int position, int[] snakes, int[] ladders) {
         int roll = dieRoll();
         position = position + roll;
@@ -232,6 +281,12 @@ public class SnakesGame extends Game {
         return position;
     }
 
+    /**
+     * Checks whether the position of the player contains a snake or a ladder.
+     * @param position  the position of the respective player
+     * @param array the array containing the positions of snakes or ladders
+     * @return  true if the position and any element in the array matches
+     */
     public boolean checkSnakeOrLadder(int position, int[] array) {
         for(int i=0;i<array.length;i++) {
             if (position == array[i]) {
@@ -241,6 +296,9 @@ public class SnakesGame extends Game {
         return false;
     }
 
+    /**
+     * Prints the game board in a readable format to the user.
+     */
     public void printGameBoard() {
         System.out.print("\n");
         for (int i=9;i>=0;i--) {
@@ -274,12 +332,21 @@ public class SnakesGame extends Game {
         }
     }
 
+    /**
+     * Generates a random number between 0 and 6, simulating a die roll.
+     * @return  a randomly generated integer between 0 and 6
+     */
     public int dieRoll() {
         //Generate random number
         java.util.Random rnd = new java.util.Random();
         return rnd.nextInt(6);
     }
 
+    /**
+     * Generates an integer array representing the game board and enumerates it from 1-100.
+     * @param board the empty array of the game board, initialised with the class
+     * @return  the new game board, with enumerated values in each element
+     */
     public int[][] initialiseGameBoard(int[][] board) {
         int ten = 0;
         int unit = 1;
