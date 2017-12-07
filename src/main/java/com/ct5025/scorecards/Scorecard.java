@@ -34,7 +34,7 @@ public abstract class Scorecard {
         }
     }
 
-    private boolean checkFileExists() {
+    protected boolean checkFileExists() {
         File scoreFile = new File("scores.txt");
         if (scoreFile.exists()) {
             return true;

@@ -179,7 +179,7 @@ public class SnakesGame extends Game {
         return array;
     }
 
-    public boolean checkWinner(int position) {
+    protected boolean checkWinner(int position) {
         if (position >= 100) {
             return true;
         }
