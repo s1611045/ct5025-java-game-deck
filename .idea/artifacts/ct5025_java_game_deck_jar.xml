@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ct5025-java-game-deck:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ct5025_java_game_deck_jar</output-path>
+    <root id="archive" name="ct5025-java-game-deck.jar">
+      <element id="module-output" name="ct5025-java-game-deck" />
+    </root>
+  </artifact>
+</component>
