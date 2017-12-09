@@ -63,6 +63,7 @@ public class SnakesGame extends Game {
 
         //Allocate snakes and ladders
         //If there is overlap, snake is the priority during gameplay
+        //Snakes & ladder tiles are HIDDEN (i.e. players are not told about the location of a snake or a ladder until they land on one)
         int[] snakes = this.allocateSnakes();
         int[] ladders = this.allocateLadders();
 
